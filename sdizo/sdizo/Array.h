@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdlib>
+#include <stdio.h>
 class Array
 {
 private:
@@ -9,6 +10,8 @@ private:
 public:
 	Array();
 	Array(int size);
+	void addInt(int x); //Adds new int at the end of the array
+	void printAll();
 	~Array();
 };
 

@@ -15,3 +15,25 @@ Array::Array(int size)
 Array::~Array()
 {
 }
+
+void Array::addInt(int x) 
+{
+	actualSize++;
+	if (maxSize > actualSize)
+	{
+		arrayPointer = (int*)realloc(arrayPointer, actualSize * sizeof(int)); //memory block changes size. 
+		
+	}
+	arrayPointer[actualSize - 1] = x;
+}
+
+void Array:: printAll() 
+{
+	
+		for (int index_tablicy = 0; index_tablicy < actualSize; index_tablicy++) {
+			printf("%i ", arrayPointer[index_tablicy]);
+		}
+		printf("\n");
+	
+
+}
