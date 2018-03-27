@@ -29,7 +29,8 @@ void Array::addInt(int x)
 void Array:: printAll() 
 {
 	
-		for (int ArrayIndex = 0; ArrayIndex < actualSize; ArrayIndex++) {
+		for (int ArrayIndex = 0; ArrayIndex < actualSize; ArrayIndex++)
+		{
 			printf("%i ", arrayPointer[ArrayIndex]);
 		}
 		printf("\n");
@@ -40,4 +41,16 @@ void Array::extendArray()
 {
 	arrayPointer = (int*)realloc(arrayPointer, actualSize * sizeof(int)); //memory block changes size. 
 	maxSize++;
+}
+
+void Array::addIntAtStart(int x)
+{
+	actualSize++;
+	if (actualSize > maxSize)
+	{
+		extendArray();
+	}
+	memmove(arrayPointer + 1, arrayPointer, (actualSize - 1) * sizeof(int)); //Copies, moves the table leaves space for one int at the start
+	*arrayPointer = x;
+	
 }
