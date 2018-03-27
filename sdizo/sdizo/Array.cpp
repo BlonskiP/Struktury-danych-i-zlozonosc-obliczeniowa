@@ -19,10 +19,9 @@ Array::~Array()
 void Array::addInt(int x) 
 {
 	actualSize++;
-	if (maxSize > actualSize)
+	if (actualSize > maxSize)
 	{
-		arrayPointer = (int*)realloc(arrayPointer, actualSize * sizeof(int)); //memory block changes size. 
-		
+		extendArray(); //increase size by 1 and relocate the array
 	}
 	arrayPointer[actualSize - 1] = x;
 }
@@ -30,10 +29,15 @@ void Array::addInt(int x)
 void Array:: printAll() 
 {
 	
-		for (int index_tablicy = 0; index_tablicy < actualSize; index_tablicy++) {
-			printf("%i ", arrayPointer[index_tablicy]);
+		for (int ArrayIndex = 0; ArrayIndex < actualSize; ArrayIndex++) {
+			printf("%i ", arrayPointer[ArrayIndex]);
 		}
 		printf("\n");
 	
 
+}
+void Array::extendArray() 
+{
+	arrayPointer = (int*)realloc(arrayPointer, actualSize * sizeof(int)); //memory block changes size. 
+	maxSize++;
 }

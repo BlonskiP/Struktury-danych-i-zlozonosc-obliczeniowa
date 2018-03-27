@@ -12,6 +12,7 @@ public:
 	Array(int size);
 	void addInt(int x); //Adds new int at the end of the array
 	void printAll();
+	void extendArray();
 	~Array();
 };
 
