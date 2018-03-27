@@ -1,6 +1,5 @@
 # Struktury-danych-i-zlozonosc-obliczeniowa
-bez STL
-Struktury-danych-i-zlozonosc-obliczeniowa
+
 Implementacja wybranych struktur danych bez STL
 
 Należy zaimplementować oraz dokonać pomiaru czasu działania operacji takich jak dodawanie elementu, usunięcie elementu i wyszukanie elementu w następujących strukturach danych: Tablica, Lista, Kopiec binarny, Drzewo czerwono-czarne.
