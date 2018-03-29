@@ -38,6 +38,18 @@ void List::showAll()
 	
 	
 }
+int List::getVaule(int index)
+{
+	elementPointer = firstElement;
+	if (listSize > 0)
+	{
+		for (int i = 1; i <= index-1; i++)
+		{
+			elementPointer = elementPointer->next;
+		}
+	}
+	return elementPointer->vaule;
+}
 void List::addElementOnIndex(int x, int index)
 {
 	Element *tmp;
@@ -131,6 +143,25 @@ void List::clearAll() {
 	}
 	listSize = 0;
 
+}
+
+bool List::contains(int x)
+{
+	elementPointer = firstElement;
+	for (int i = 1; i < listSize; i++)
+	{
+		if (elementPointer != nullptr)
+		{
+			if (elementPointer->vaule == x) {
+				std::cout << "Znaleziono element " << x << std::endl;
+				return true;
+			}
+			elementPointer = elementPointer->next;
+		}
+
+	}
+	std::cout << "Brak elementu w liscie :  " << x << std::endl;
+	return false;
 }
 
 List::List()

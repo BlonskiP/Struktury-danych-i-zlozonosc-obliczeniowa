@@ -23,8 +23,9 @@ public:
 	void deleteIndex(int index);
 	void deleteFirst();
 	void showAll();
-	
+	int getVaule(int index);
 	void clearAll();
+	bool contains(int x);
 	List();
 	~List();
 };

@@ -10,8 +10,9 @@ int main() {
 	testList.addElement(5);
 	testList.addElementOnIndex(9, 3);
 	testList.addElementOnBeginning(400);
-	testList.addElement(20);
+	std::cout << testList.getVaule(3) << std::endl;
 	testList.deleteIndex(3);
+	testList.contains(1);
 	testList.showAll();
 
 
