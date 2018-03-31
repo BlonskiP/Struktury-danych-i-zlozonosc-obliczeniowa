@@ -88,6 +88,11 @@ int Heap::pop()
 	return root;
 }
 
+void Heap::kill()
+{
+	delete[] array;
+}
+
 void Heap::print(std::string sp, std::string sn, int index)
 {
 	
@@ -139,6 +144,7 @@ void Heap::print()
 	print("", "", 0);
 }
 
+
 bool Heap::contains(int value)
 {
 	
@@ -149,4 +155,21 @@ bool Heap::contains(int value)
 	}
 	
 	return false;
+}
+
+bool Heap::IsAHeap() {
+	int parent;
+	for (int i = 0; i < size; i++)
+	{
+		parent = getParent(i);
+		if (array[i] > array[parent] ) {
+			std::cout << "It's not a heap!ERROR" << std::endl;
+			std::cout << array[i] <<"is bigger than his parent: " << array[parent] << std::endl;
+			return false;
+		}
+		
+	}
+	std::cout << "It's  a heap! for sureee" << std::endl;
+	return true;
+
 }

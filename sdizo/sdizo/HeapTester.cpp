@@ -9,8 +9,10 @@ int main() {
 	}
 
 	testHeap.pop();
+	
 
 	testHeap.print();
+	testHeap.IsAHeap();
 	system("Pause");
 	return 0;
 }

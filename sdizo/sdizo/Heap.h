@@ -16,16 +16,18 @@ private:
 public:
 	Heap(int startingSize);
 	~Heap();
-	void heapSort(int index);
-	void extendHeap();
-	void push(int x);
-	int pop();
-	void kill();
-	void print(std::string sp, std::string sn, int index);
-	int getParent(int index);
-	int getLeftChild(int index);
-	int getRightChild(int index);
-	void print();
-	bool contains(int value);
+	void heapSort(int index); // sorting
+	void extendHeap(); // more space for heap
+	void push(int x); // add int to heap
+	int pop(); // return root 
+	void kill(); //deletes array
+	void print(std::string sp, std::string sn, int index); 
+	int getParent(int index); // return parent id
+	int getLeftChild(int index); // return left child id
+	int getRightChild(int index); //returns right child id
+	void print(); // no parameter version of print for easy use
+
+	bool contains(int value); //checks if 'value' is in heap
+	bool IsAHeap(); //tests if its a heap. compare parents with theis childern
 };
 
