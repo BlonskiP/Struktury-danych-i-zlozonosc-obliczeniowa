@@ -115,6 +115,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Heap.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Heap.cpp" />
+    <ClCompile Include="HeapTester.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
