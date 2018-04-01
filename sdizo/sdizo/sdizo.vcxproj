@@ -118,18 +118,15 @@
     <ClInclude Include="Heap.h" />
     <ClInclude Include="List.h" />
     <ClCompile Include="Array.cpp" />
-    <ClCompile Include="ArrayTester.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="List.cpp" />
-    <ClCompile Include="ListTester.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Heap.cpp" />
-    <ClCompile Include="HeapTester.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
