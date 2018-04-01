@@ -34,7 +34,7 @@ void List::showAll()
 		}
 	}
 	else
-		std::cout << "Pusta lista" << std::endl;
+		std::cout << "EMPTY LIST" << std::endl;
 	
 	
 }
@@ -57,7 +57,7 @@ void List::addElementOnIndex(int x, int index)
 	if (listSize == 0) addElement(x);
 	else 
 	{
-		for (int i = 1; i < index-1; i++)
+		for (int i = 0; i < index-1; i++)
 		{
 			if (elementPointer != nullptr)
 			{
@@ -153,14 +153,14 @@ bool List::contains(int x)
 		if (elementPointer != nullptr)
 		{
 			if (elementPointer->vaule == x) {
-				std::cout << "Znaleziono element " << x << std::endl;
+				std::cout << "Found " << x << std::endl;
 				return true;
 			}
 			elementPointer = elementPointer->next;
 		}
 
 	}
-	std::cout << "Brak elementu w liscie :  " << x << std::endl;
+	std::cout << "There is no element =  :  " << x << std::endl;
 	return false;
 }
 

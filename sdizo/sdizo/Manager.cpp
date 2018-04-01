@@ -9,13 +9,8 @@ long long int read_QPC()
 	return((long long int)count.QuadPart);
 }
 
-void Manager::createList()
-{
-	listPointer = new List();
-	for (int i = 0; i < structureSize; i++)
-		listPointer->addElement(elementsArray[i]);
-}
 
+//Array Functions
 void Manager::arrayMenu()
 {
 	system("cls");
@@ -36,42 +31,199 @@ void Manager::createArrayOfElements()
 	std::cout << "I created an array of ints (0 to 9999 vaule) we will add it to the structure" << std::endl;
 
 }
+//List functions
+#pragma region ListFunctions  
+void Manager::createList()
+{
+	listPointer = new List();
+	for (int i = 0; i < structureSize; i++)
+		listPointer->addElement(elementsArray[i]);
+}
+
 
 void Manager::listMenu() {
+	system("Pause");
 	system("cls");
 	outPutStars();
 	std::cout << "Welocme to list Menu. I will cout time operacions" << std::endl;
 	std::cout << "1. Create List" << std::endl;
 	std::cout << "2. Add Item to list" << std::endl;
 	std::cout << "3. Delete Item from list" << std::endl;
-	std::cout << "4. Search for value" << std::endl;
-	std::cout << "5. Search index" << std::endl;
+	std::cout << "4. Search index" << std::endl;
+	std::cout << "5. Search for value" << std::endl;
+	std::cout << "6. Show ALL and make a file" << std::endl;
 	outPutStars();
 	int listSize = 0;
-	int choice;
+	int choice = 0;
 	std::cin >> choice;
-	bool choosen = false;
-	while (choosen == false)
+
+	while (true)
 	{
 		switch (choice) {
 		case 1: {
-			choosen = true;
+			
 			listPointer = new List();
 			createArrayOfElements();
+			//HERE PUT FUCTION TO FILE
 			timeCount(&Manager::createList);
+			isStructureCreated = true;
+			listMenu();
+		}
+
+		case 2:listAddMenu();
+		case 3:deleteListMenu(); break;
+		case 4: {
+			std::cout << "What number do you want to check?";
+			getNumber();
+			timeCount(&Manager::listContains);
+			
+			if (found == true)
+				std::cout << intToAdd << " Was found" << std::endl;
+			else
+				std::cout << intToAdd << " Was not found" << std::endl;
+			listMenu();
+		} break;
+		case 5: {
+			getIndex();
+			timeCount(&Manager::searchInList);
+			std::cout << " on " << index <<  " I found int= " << intToAdd << std::endl;
+
+		
+			listMenu();
+		} break;
+		case 6: {
+			listPointer->showAll();
+			
+
 		
 		}
-	
-		case 2:choosen = true; break;
-		case 3:choosen = true; break;
-		case 4:choosen = true; break;
-		case 5:choosen = true; break;
 		default:
 			std::cout << "Choose between 1-5" << std::endl;
 			std::cin >> choice;
+		
 		}
 		}
 	}
+
+void Manager::addToListOnStart()
+{
+	listPointer->addElementOnBeginning(intToAdd);
+}
+
+void Manager::addToListOnEnd()
+{
+	listPointer->addElement(intToAdd);
+}
+
+void Manager::addToListOnIndex()
+{
+	listPointer->addElementOnIndex(intToAdd, index);
+}
+
+void Manager::deleteListMenu()
+{
+	std::cout << "So what do you want to delete from list?" << std::endl;
+	std::cout << "1. Last Element" << std::endl;
+	std::cout << "2. First Element" << std::endl;
+	std::cout << "3. Index element" << std::endl;
+	int choice;
+	std::cin >> choice;
+	switch (choice)
+	{
+	case 1: {
+	
+		timeCount(&Manager::deleteFromListLast);
+		std::cout << "Number has been deleted" << std::endl;
+		listMenu();
+	}
+	case 2: {
+	
+		timeCount(&Manager::deleteFromListBeginning);
+		std::cout << "Number has been deleted" << std::endl;
+		listMenu();
+	}
+
+
+	case 3: {
+		getIndex();
+		timeCount(&Manager::deleteFromListIndex);
+		std::cout << "Number has been deleted" << std::endl;
+		listMenu();
+	}
+	default: {break; }
+
+	}
+
+
+	listMenu();
+}
+
+void Manager::deleteFromListLast()
+{
+	listPointer->deleteLastElement();
+}
+
+void Manager::deleteFromListIndex()
+{
+	listPointer->deleteIndex(index);
+}
+
+void Manager::deleteFromListBeginning()
+{
+	listPointer->deleteFirst();
+}
+void Manager::searchInList()
+{
+	intToAdd= listPointer->getVaule(index);
+}
+void Manager::listContains()
+{
+	found=listPointer->contains(intToAdd);
+}
+void Manager::listAddMenu()
+{
+	std::cout << "Where do you want to add int?" << std::endl;
+	std::cout << "1.At the beginning" << std::endl;
+	std::cout << "2.At the end" << std::endl;
+	std::cout << "3.On index" << std::endl;
+	int choice;
+	std::cin >> choice;
+	switch (choice)
+	{
+	case 1: {
+		getNumber();
+		timeCount(&Manager::addToListOnStart);
+		std::cout << "Number has been added" << std::endl;
+		listMenu();
+	}
+	case 2: {
+		getNumber();
+		timeCount(&Manager::addToListOnEnd);
+		std::cout << "Number has been added" << std::endl;
+		listMenu();
+	}
+
+
+	case 3: {
+		getNumber();
+		getIndex();
+		timeCount(&Manager::addToListOnIndex);
+		std::cout << "Number has been added" << std::endl;
+		listMenu();
+	}
+	default: {break; }
+
+	}
+
+}
+
+#pragma endregion  
+//Heap functions
+
+
+void Manager::createHeap()
+{
+}
 
 void Manager::heapMenu()
 {
@@ -82,6 +234,22 @@ void Manager::outPutStars()
 {
 	for (int i = 0; i < 80; i++)
 		std::cout << "*";
+}
+
+
+
+int Manager::getNumber()
+{
+	std::cout << "Give me int" << std::endl;
+	std::cin >> intToAdd;
+	return intToAdd;
+}
+
+int Manager::getIndex()
+{
+	std::cout << "On what index?" << std::endl;
+	std::cin >> index;
+	return index;
 }
 
 Manager::Manager()
@@ -127,8 +295,8 @@ void Manager::timeCount(void(Manager::*function)(void))
 	elapsed = read_QPC() - start;
 	std::cout << "Time [s] = " << std::fixed << std::setprecision(3) << (float)elapsed /frequency << std::endl;
 	std::cout << "Time [ms] = " << std::setprecision(0) << (1000.0 * elapsed) /frequency << std::endl;
-	std::cout << "Time [us] = " << std::setprecision(0) << (1000000.0 * elapsed) /frequency << std::endl << std::endl;	std::cout << "The list will wait for you in list.txt file" << std::endl;
-
+	std::cout << "Time [us] = " << std::setprecision(0) << (1000000.0 * elapsed) /frequency << std::endl << std::endl;
+	
 
 }
 
