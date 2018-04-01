@@ -115,9 +115,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Manager.cpp" />
     <ClInclude Include="Heap.h" />
     <ClInclude Include="List.h" />
     <ClCompile Include="Array.cpp" />
+    <ClInclude Include="Manager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
