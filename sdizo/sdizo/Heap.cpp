@@ -4,13 +4,24 @@
 
 Heap::Heap(int startingSize)
 {
-	if (startingSize >= 0) {
+	if (startingSize > 0) {
 		size = 0;
 		maxSize = startingSize;
 		array = new int[maxSize];
 	}
 	else
-		std::cout << "StartingSize must be not lower than 0" << std::endl;
+	{
+		size = 0;
+		maxSize = 1;
+		array = new int[maxSize];
+	}
+}
+
+Heap::Heap()
+{
+	size = 0;
+	maxSize = 1;
+	array = new int[maxSize];
 }
 
 
@@ -52,7 +63,7 @@ void Heap::extendHeap()
 	array = temp;
 } //DONE
 
-void Heap::push(int x)
+void Heap::addElement(int x)
 {
 	if (size == maxSize) //make sure you have free space for new element. If not, increase max size and reloc array
 	{
@@ -74,6 +85,21 @@ void Heap::push(int x)
 	}
 }
 
+void Heap::addElementOnBeginning(int x)
+{
+	//ToDO
+}
+
+void Heap::addElementOnIndex(int x, int index)
+{
+	//to do
+}
+
+void Heap::deleteIndex(int index)
+{
+	//toDO
+}
+
 int Heap::pop()
 {
 	if (size == 1) 
@@ -88,9 +114,20 @@ int Heap::pop()
 	return root;
 }
 
-void Heap::kill()
+void Heap::clearAll()
 {
 	delete[] array;
+}
+
+void Heap::deleteLastElement()
+{
+	array[size - 1] = 0;
+	size--;
+}
+
+void Heap::deleteFirst()
+{
+	pop();
 }
 
 void Heap::print(std::string sp, std::string sn, int index)
@@ -139,9 +176,15 @@ int Heap::getRightChild(int index)
 	return rightChildIndex;
 }
 
-void Heap::print()
+void Heap::printAll()
 {
 	print("", "", 0);
+	IsAHeap();
+}
+
+int Heap::getVaule(int index)
+{
+	return array[index];
 }
 
 

@@ -122,7 +122,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Heap.cpp" />
-    <ClCompile Include="HeapTester.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
