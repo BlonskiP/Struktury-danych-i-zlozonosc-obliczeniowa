@@ -4,13 +4,24 @@
 
 Heap::Heap(int startingSize)
 {
-	if (startingSize >= 0) {
+	if (startingSize > 0) {
 		size = 0;
 		maxSize = startingSize;
 		array = new int[maxSize];
 	}
 	else
-		std::cout << "StartingSize must be not lower than 0" << std::endl;
+	{
+		size = 0;
+		maxSize = 1;
+		array = new int[maxSize];
+	}
+}
+
+Heap::Heap()
+{
+	size = 0;
+	maxSize = 1;
+	array = new int[maxSize];
 }
 
 
@@ -52,7 +63,7 @@ void Heap::extendHeap()
 	array = temp;
 } //DONE
 
-void Heap::push(int x)
+void Heap::addElement(int x)
 {
 	if (size == maxSize) //make sure you have free space for new element. If not, increase max size and reloc array
 	{
@@ -74,6 +85,55 @@ void Heap::push(int x)
 	}
 }
 
+void Heap::addElementOnBeginning(int x)
+{
+	
+	int *temp = new int[maxSize+1];
+
+	for (int i = 0; i <= size+1; i++)
+	{
+
+		temp[i+1] = array[i];
+	}
+	temp[0] = x;
+	size++;
+	array = temp;
+	heapSort(0);
+}
+
+void Heap::addElementOnIndex(int x, int index)
+{
+	int *temp = new int[maxSize + 1];
+	size++;
+	for (int i = 0; i < index; i++)
+	{
+		temp[i] = array[i];
+	}
+	
+	for (int i = index; i <= size ; i++)
+	{
+
+		temp[i+1] = array[i];
+	}
+	
+	temp[index] = x;
+	array = temp;
+	contains(13);
+	
+	massHeapSort();
+}
+
+void Heap::deleteIndex(int index)
+{
+for (int i = index; i <= size-1; i++)
+	{
+
+	array[i] = array[i + 1];
+	}
+	size--;	
+	massHeapSort();
+}
+
 int Heap::pop()
 {
 	if (size == 1) 
@@ -88,9 +148,20 @@ int Heap::pop()
 	return root;
 }
 
-void Heap::kill()
+void Heap::clearAll()
 {
 	delete[] array;
+}
+
+void Heap::deleteLastElement()
+{
+	array[size - 1] = 0;
+	size--;
+}
+
+void Heap::deleteFirst()
+{
+	pop();
 }
 
 void Heap::print(std::string sp, std::string sn, int index)
@@ -112,7 +183,7 @@ void Heap::print(std::string sp, std::string sn, int index)
 
 		s = s.substr(0, sp.length() - 2);
 
-		std::cout << s << sn << array[index] << std::endl;
+		std::cout << s << sn << " " <<array[index] << std::endl;
 
 		s = sp;
 		if (sn == cl) s[s.length() - 2] = ' ';
@@ -139,9 +210,15 @@ int Heap::getRightChild(int index)
 	return rightChildIndex;
 }
 
-void Heap::print()
+void Heap::printAll()
 {
 	print("", "", 0);
+	IsAHeap();
+}
+
+int Heap::getVaule(int index)
+{
+	return array[index];
 }
 
 
@@ -150,7 +227,7 @@ bool Heap::contains(int value)
 	
 	for (int i = 0; i < size; i++)
 	{
-		if (array[i] = value)
+		if (array[i] == value)
 			return true;
 	}
 	
@@ -172,4 +249,13 @@ bool Heap::IsAHeap() {
 	std::cout << "It's  a heap! for sureee" << std::endl;
 	return true;
 
+}
+
+void Heap::massHeapSort()
+{
+	for (int i = 0; i < size; i++) {
+		heapSort(i);
+		
+	}
+	IsAHeap();
 }

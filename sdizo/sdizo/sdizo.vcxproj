@@ -116,17 +116,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Heap.h" />
-    <ClInclude Include="List.h" />
     <ClCompile Include="Array.cpp" />
+    <ClInclude Include="List.h" />
+    <ClInclude Include="Structure.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Heap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="List.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Heap.cpp" />
+    <ClCompile Include="StructureTester.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
