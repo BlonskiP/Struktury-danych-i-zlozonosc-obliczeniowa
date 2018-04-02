@@ -87,7 +87,17 @@ void Heap::addElement(int x)
 
 void Heap::addElementOnBeginning(int x)
 {
-	//ToDO
+	
+	int *temp = new int[maxSize+1];
+
+	for (int i = 0; i <= size+1; i++)
+	{
+
+		temp[i+1] = array[i];
+	}
+	temp[0] = x;
+	size++;
+	array = temp;
 }
 
 void Heap::addElementOnIndex(int x, int index)
@@ -149,7 +159,7 @@ void Heap::print(std::string sp, std::string sn, int index)
 
 		s = s.substr(0, sp.length() - 2);
 
-		std::cout << s << sn << array[index] << std::endl;
+		std::cout << s << sn << " " <<array[index] << std::endl;
 
 		s = sp;
 		if (sn == cl) s[s.length() - 2] = ' ';
@@ -215,4 +225,13 @@ bool Heap::IsAHeap() {
 	std::cout << "It's  a heap! for sureee" << std::endl;
 	return true;
 
+}
+
+void Heap::massHeapSort()
+{
+	for (int i = 0; i < size; i++) {
+		heapSort(i);
+		
+	}
+	IsAHeap();
 }

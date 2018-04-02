@@ -31,7 +31,7 @@ public:
 	void deleteFirst();
 	void printAll(); // no parameter version of print for easy use
 	int getVaule(int index);
-	
+	void massHeapSort();
 	bool contains(int value); //checks if 'value' is in heap
 protected:
 	void heapSort(int index); // sorting
@@ -41,5 +41,6 @@ protected:
 	int getRightChild(int index); //returns right child id
 	void print(std::string sp, std::string sn, int index);
 	bool IsAHeap(); //tests if its a heap. compare parents with theis childern
+	
 };
 
