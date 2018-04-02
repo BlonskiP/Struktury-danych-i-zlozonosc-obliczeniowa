@@ -16,6 +16,6 @@ public:
 	virtual int getVaule(int index) = 0;
 	virtual	void clearAll() = 0;
 	virtual	bool contains(int x) = 0;
-
+	int size;
 };
 

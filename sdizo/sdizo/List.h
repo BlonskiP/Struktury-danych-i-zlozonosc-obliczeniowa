@@ -13,7 +13,6 @@ private:
 	Element *lastElement;
 	Element *elementPointer;
 	Element *firstElement;
-	int listSize;
 public:
 	//ADD METHODS
 	void addElement(int x);
@@ -23,6 +22,7 @@ public:
 	void deleteLastElement();
 	void deleteIndex(int index);
 	void deleteFirst();
+	//Searching
 	void printAll();
 	int getVaule(int index);
 	void clearAll();

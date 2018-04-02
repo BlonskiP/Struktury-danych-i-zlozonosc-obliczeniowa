@@ -116,7 +116,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Array.cpp" />
-    <ClCompile Include="ArrayTester.cpp" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Structure.h" />
   </ItemGroup>

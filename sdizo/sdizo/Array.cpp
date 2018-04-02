@@ -16,18 +16,18 @@ Array::~Array()
 {
 }
 
-void Array::addInt(int x) 
+void Array::addElement(int x) 
 {
-	actualSize++;
+	size++;
 	extendArray(); //increase size by 1 and relocate the array
 	
-	arrayPointer[actualSize - 1] = x;
+	arrayPointer[size - 1] = x;
 }
 
 void Array:: printAll() 
 {
 	
-		for (int ArrayIndex = 0; ArrayIndex < actualSize; ArrayIndex++)
+		for (int ArrayIndex = 0; ArrayIndex < size; ArrayIndex++)
 		{
 			printf("%i ", arrayPointer[ArrayIndex]);
 		}
@@ -37,29 +37,29 @@ void Array:: printAll()
 }
 void Array::extendArray()
 {
-	if (maxSize <= actualSize) //Check if extension and relocation is nessesery
-	arrayPointer = (int*)realloc(arrayPointer, actualSize * sizeof(int)); //memory block changes size. 
-	if(maxSize<actualSize)
+	if (maxSize <= size) //Check if extension and relocation is nessesery
+	arrayPointer = (int*)realloc(arrayPointer, size * sizeof(int)); //memory block changes size. 
+	if(maxSize<size)
 	maxSize++;
 }
 
-void Array::addIntAtStart(int x)
+void Array::addElementOnBeginning(int x)
 {
-	actualSize++;
+	size++;
 	extendArray();
 	
-	memmove(arrayPointer + 1, arrayPointer, (actualSize - 1) * sizeof(int)); //Copies, moves the table leaves space for one int at the start
+	memmove(arrayPointer + 1, arrayPointer, (size - 1) * sizeof(int)); //Copies, moves the table leaves space for one int at the start
 	*arrayPointer = x;
 	
 }
-void Array::addOnIndex(int x, int index) 
+void Array::addElementOnIndex(int x, int index) 
 {
-	if (index < actualSize && index >= 0) 
+	if (index < size && index >= 0) 
 	{
-		actualSize++;
+		size++;
 		extendArray();
 		
-		memmove(arrayPointer + index + 1, arrayPointer + index, (actualSize - 1 - index) * sizeof(int));
+		memmove(arrayPointer + index + 1, arrayPointer + index, (size - 1 - index) * sizeof(int));
 		*(arrayPointer + index) = x;
 
 	}
@@ -68,7 +68,7 @@ void Array::addOnIndex(int x, int index)
 }
 bool Array::contains(int x) 
 {
-	for (int i = 0; i < actualSize; i++) 
+	for (int i = 0; i < size; i++) 
 	{
 		if (*(arrayPointer + i) == x)
 		{
@@ -86,7 +86,7 @@ void Array::GetIndexes(int x)
 		
 	{
 		std::cout << x << " found on indexes: ";
-		for (int i = 0; i < actualSize; i++) {
+		for (int i = 0; i < size; i++) {
 			if (*(arrayPointer + i) == x) 
 			{
 				std::cout << i << " ";
@@ -100,11 +100,11 @@ void Array::GetIndexes(int x)
 		std::cout << "THERE IS NO " << x << std::endl;
 
 }
-int Array::GetInt(int index) 
+int Array::getVaule(int index) 
 {
 	if (index < maxSize && index >=0)
 	{
-		if (index < actualSize) 
+		if (index < size) 
 		{
 			return *(arrayPointer + index);
 		}
@@ -114,45 +114,51 @@ int Array::GetInt(int index)
 	}
 	else
 	std::cout << "ERROR AT GetInt method: index out of range" << std::endl;
-
+	
 }
 
-void Array::delLast()
+void Array::deleteLastElement()
 {
-	if (actualSize > 0) {
+	if (size > 0) {
 		maxSize--;
-		actualSize--;
-		arrayPointer = (int*)realloc(arrayPointer, actualSize * sizeof(int));
+		size--;
+		arrayPointer = (int*)realloc(arrayPointer, size * sizeof(int));
 	}
 	else
 	std::cout << "ERROR on delLast method. Array is empty" << std::endl;
 }
 
-void Array::delFirst()
+void Array::deleteFirst()
 {
-	if (actualSize > 0) {
-		memmove(arrayPointer, arrayPointer + 1, (actualSize * sizeof(int)));
-		actualSize--;
+	if (size > 0) {
+		memmove(arrayPointer, arrayPointer + 1, (size * sizeof(int)));
+		size--;
 		maxSize--;
-		arrayPointer = (int*)realloc(arrayPointer, actualSize * sizeof(int));
+		arrayPointer = (int*)realloc(arrayPointer, size * sizeof(int));
 	}
 	else
 	std::cout << "ERROR on delFirst method. Array is empty" << std::endl;
 }
 
-void Array::delOnIndex(int index)
+void Array::deleteIndex(int index)
 {
-	if (index < actualSize && index >= 0)
+	if (index < size && index >= 0)
 	{
-		actualSize--;
+		size--;
 		maxSize--;
 	
 
-		memmove(arrayPointer + index , arrayPointer + index+1, (actualSize  - index) * sizeof(int));
-		arrayPointer = (int*)realloc(arrayPointer, actualSize * sizeof(int));
+		memmove(arrayPointer + index , arrayPointer + index+1, (size  - index) * sizeof(int));
+		arrayPointer = (int*)realloc(arrayPointer, size * sizeof(int));
 
 	}
 	else
 		std::cout << "ERROR AT 'addOnIndex' method. Array is not large enough" << std::endl;
 
+}
+
+void Array::clearAll()
+{
+	delete[] arrayPointer;
+	size = 0;
 }

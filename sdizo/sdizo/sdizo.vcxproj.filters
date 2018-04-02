@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ArrayTester.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Array.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

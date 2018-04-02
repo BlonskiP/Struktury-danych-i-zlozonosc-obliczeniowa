@@ -3,36 +3,39 @@
 #include <stdio.h>
 #include <iostream>
 #include <string.h>
-class Array
+#include "Structure.h"
+class Array : public Structure
 {
 private:
-	int actualSize = 0;
 	int maxSize = 0;
 	int* arrayPointer;
 public:
 	//Contructors
 	Array();
 	Array(int size);
+	~Array();
 	//Add fuctions
-	void addInt(int x); 
-	void addIntAtStart(int x);
-	void addOnIndex(int x, int index);
+	void addElement(int x);
+	void addElementOnBeginning(int x);
+	void addElementOnIndex(int x, int index);
 
 
-	void printAll();
+	
 	
 	//Searching
 	bool contains(int x);
-	void GetIndexes(int x);
-	int GetInt(int index);
 	
+	int getVaule(int index);
+	void printAll();
 	//Delete form array
-	void delLast();
-	void delFirst();
-	void delOnIndex(int index);
-
-
-	void extendArray();
-	~Array();
+	void deleteLastElement();
+	void deleteFirst();
+	void deleteIndex(int index);
+	void clearAll();
+	//Private array fuctions
+private:
+	void extendArray(); //Extends and reloc array
+	void GetIndexes(int x); // test method
+	
 };
 
