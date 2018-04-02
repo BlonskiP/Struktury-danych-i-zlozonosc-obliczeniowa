@@ -98,16 +98,40 @@ void Heap::addElementOnBeginning(int x)
 	temp[0] = x;
 	size++;
 	array = temp;
+	heapSort(0);
 }
 
 void Heap::addElementOnIndex(int x, int index)
 {
-	//to do
+	int *temp = new int[maxSize + 1];
+	size++;
+	for (int i = 0; i < index; i++)
+	{
+		temp[i] = array[i];
+	}
+	
+	for (int i = index; i <= size ; i++)
+	{
+
+		temp[i+1] = array[i];
+	}
+	
+	temp[index] = x;
+	array = temp;
+	contains(13);
+	
+	massHeapSort();
 }
 
 void Heap::deleteIndex(int index)
 {
-	//toDO
+for (int i = index; i <= size-1; i++)
+	{
+
+	array[i] = array[i + 1];
+	}
+	size--;	
+	massHeapSort();
 }
 
 int Heap::pop()
@@ -203,7 +227,7 @@ bool Heap::contains(int value)
 	
 	for (int i = 0; i < size; i++)
 	{
-		if (array[i] = value)
+		if (array[i] == value)
 			return true;
 	}
 	

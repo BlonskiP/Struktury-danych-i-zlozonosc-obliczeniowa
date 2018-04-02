@@ -15,7 +15,8 @@ int main() {
 	for (int i = 0; i < 20; i++) {
 		pointer->addElement(i);
 	}
-	pointer->addElementOnBeginning(-20);
+	pointer->printAll();
+	pointer->addElementOnIndex(20, 2);
 	pointer->printAll();
 	heap.massHeapSort();
 	pointer->printAll();
