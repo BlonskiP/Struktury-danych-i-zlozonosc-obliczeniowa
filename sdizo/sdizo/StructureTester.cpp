@@ -1,3 +1,4 @@
+/*
 #include <iostream>
 #include "List.h"
 #include "Structure.h"
@@ -23,5 +24,5 @@ int main() {
 
 	system("PAUSE");
 }
-
-
+*/
+;
