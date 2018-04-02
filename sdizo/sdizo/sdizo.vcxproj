@@ -115,9 +115,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Heap.h" />
     <ClCompile Include="Array.cpp" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Structure.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Heap.cpp" />
+    <ClCompile Include="HeapTester.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
