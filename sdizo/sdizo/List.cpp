@@ -20,7 +20,7 @@ void List::addElement(int x)
 	}
 
 }
-void List::showAll()
+void List::printAll()
 {
 	elementPointer = firstElement;
 	
