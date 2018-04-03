@@ -160,7 +160,8 @@ void Array::deleteIndex(int index)
 
 void Array::clearAll()
 {
-	free(arrayPointer);
 	size = 0;
+	free(arrayPointer);
+	arrayPointer = (int*)calloc(0, sizeof(int));
 	
 }
