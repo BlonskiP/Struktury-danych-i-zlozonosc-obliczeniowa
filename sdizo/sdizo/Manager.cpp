@@ -65,10 +65,10 @@ void Manager::structureMenu()
 		std::cin >> choice;
 		switch (choice) 
 		{
-		case 1: {void measureADD(); break; }
-		case 2: {void measureDEL(); break; }
-		case 3: {void measureContains(); break; }
-		case 4: {void measureFindIndex(); break; }
+		case 1: {measureADD(); break; }
+		case 2: {measureDEL(); break; }
+		case 3: {measureContains(); break; }
+		case 4: {measureFindIndex(); break; }
 		case 5: {structure->printAll(); break; }
 		case 6: {
 			//TO DO
@@ -159,6 +159,27 @@ int Manager::getNumber()
 int Manager::getIndex()
 {
 	return 0;
+}
+
+void Manager::measureADD()
+{
+	for (int i = 0; i < 100; i++) {
+		createArrayOfElements();
+
+	
+	}
+}
+
+void Manager::measureDEL()
+{
+}
+
+void Manager::measureFindIndex()
+{
+}
+
+void Manager::measureContains()
+{
 }
 
 
