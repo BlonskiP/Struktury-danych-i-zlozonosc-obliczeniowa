@@ -7,6 +7,7 @@ int main()
 	Manager program;
 	program.mainMenu();
 
-	system("Pause");
+	
+	system("pause");
 	return 0;
 }

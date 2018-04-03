@@ -14,6 +14,7 @@ Array::Array(int size)
 
 Array::~Array()
 {
+	free(arrayPointer);
 }
 
 void Array::addElement(int x) 
@@ -161,4 +162,5 @@ void Array::clearAll()
 {
 	delete[] arrayPointer;
 	size = 0;
+	
 }

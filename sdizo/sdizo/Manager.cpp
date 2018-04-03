@@ -12,6 +12,8 @@ Manager::Manager()
 
 Manager::~Manager()
 {
+	
+	
 }
 //Menus
 void Manager::mainMenu()
@@ -129,12 +131,9 @@ void Manager::fillWithRandom()
 //It creates array of random ints
 void Manager::createArrayOfElements()
 {
-	
-	std::cout << "How many Elements do you want random?";
-	std::cin >> structureSize;
 	if (structureSize <= 0)
 	{
-		std::cout << "I need more than 0 elements in the list" << std::endl;
+		std::cout << "I need more than 0 elements in the structure" << std::endl;
 	}
 	elementsArray = new int[structureSize];
 	for (int i = 0; i < structureSize; i++) {
@@ -165,9 +164,10 @@ void Manager::measureADD()
 {
 	for (int i = 0; i < 100; i++) {
 		createArrayOfElements();
-
-	
+		timeCount(&Manager::fillWithRandom);
+		structure->clearAll();
 	}
+	
 }
 
 void Manager::measureDEL()

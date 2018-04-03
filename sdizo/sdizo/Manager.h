@@ -21,7 +21,8 @@ private:
 	bool structureExist;
 	bool found;
 	bool exit;
-	int index, givenInt, structureSize, choice;
+	int index, givenInt, choice;
+	int structureSize = 50;
 	int measurement;
 	int measurementTab[100];
 public:
