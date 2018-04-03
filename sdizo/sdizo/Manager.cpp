@@ -49,7 +49,6 @@ void Manager::mainMenu()
 
 void Manager::structureMenu()
 {
-	
 	outPutStars();
 	std::cout << "It will measure speed of operations on data structures which I implemented" << std::endl;
 	
@@ -63,6 +62,8 @@ void Manager::structureMenu()
 		std::cout << "5.Print structure" << std::endl;
 		std::cout << "6.Put structure in file" << std::endl;
 		std::cout << "7.Delete Structure and Create New" << std::endl;
+		std::cout << "8. Set number of measurments (1000 is default)" << std::endl;
+		std::cout << "8. Set structure size" << std::endl;
 		std::cout << "0. EXIT" << std::endl;
 		std::cin >> choice;
 		switch (choice) 
@@ -78,10 +79,12 @@ void Manager::structureMenu()
 		case 7: {
 			//To DO
 			break; }
+		case 8: {setMeasureTabSize(); structureMenu();break; }
+		case 9: {setStructureSize(); structureMenu(); break; }
 		case 0: {break; }
 		default: {
 			system("cls");
-			std::cout << "Give 1-7 and 0 to preced" << std::endl;
+			std::cout << "Give 0-9 to preced" << std::endl;
 			structureMenu();
 			 }
 		}
@@ -109,6 +112,7 @@ void Manager::setStructurePointer()
 	}
 	std::cout << "Structure has been created. Size = 0" << std::endl;
 	std::cout << "Going back to StructureMenu " << std::endl;
+	setMeasureTabSize();
 	system("Pause");
 	system("cls");
 	structureExist = true;
@@ -136,10 +140,11 @@ void Manager::createArrayOfElements()
 		std::cout << "I need more than 0 elements in the structure" << std::endl;
 	}
 	elementsArray = new int[structureSize];
+
 	for (int i = 0; i < structureSize; i++) {
 		elementsArray[i] = (rand() % 1000) - 500; //-50 to49;
 	}
-	std::cout << "I created an array of ints (0 to 9999 vaule) we will add it to the structure" << std::endl;
+	//std::cout << "I created an array of ints (0 to 9999 vaule) we will add it to the structure" << std::endl;
 
 }
 void Manager::outPutStars()
@@ -162,12 +167,19 @@ int Manager::getIndex()
 
 void Manager::measureADD()
 {
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < numberMeasurments; i++) {
 		createArrayOfElements();
-		timeCount(&Manager::fillWithRandom);
+		measurementTab[i]=timeCount(&Manager::fillWithRandom);
 		structure->clearAll();
+		delete[] elementsArray;
 	}
-	
+	std::cout << "Counting average measurment" << std::endl;
+	measurement = 0;
+	for (int i = 0; i < numberMeasurments; i++) {
+		measurement += measurementTab[i];
+	}
+	measurement = measurement / numberMeasurments;
+	std::cout << "Average time is: " << measurement <<"of add in the end algorithm" << std::endl;
 }
 
 void Manager::measureDEL()
@@ -181,6 +193,36 @@ void Manager::measureFindIndex()
 void Manager::measureContains()
 {
 }
+
+void Manager::setMeasureTabSize()
+{
+	
+		std::cout << "How many measurments do you want to do?";
+		std::cin >> numberMeasurments;
+		while (numberMeasurments <= 0)
+		{
+			std::cout << "ERROR";
+			std::cout << "How many measurments do you want to do?";
+			std::cin >> numberMeasurments;
+		}
+		measurementTab = new int[numberMeasurments];
+	
+}
+
+void Manager::setStructureSize()
+{
+
+	std::cout << "What should be structure END size?";
+	std::cin >> structureSize;
+	while (structureSize <= 0)
+	{
+		std::cout << "ERROR";
+		std::cout << "What should be structure END size?";
+		std::cin >> structureSize;
+	}
+
+}
+
 
 
 //Time counting
@@ -201,9 +243,9 @@ int Manager::timeCount(void(Manager::* function)(void))
 	start = read_QPC();
 	(this->*function)();
 	elapsed = read_QPC() - start;
-	std::cout << "Time [s] = " << std::fixed << std::setprecision(3) << (float)elapsed / frequency << std::endl;
-	std::cout << "Time [ms] = " << std::setprecision(0) << (1000.0 * elapsed) / frequency << std::endl;
-	std::cout << "Time [us] = " << std::setprecision(0) << (1000000.0 * elapsed) / frequency << std::endl << std::endl;
-
+//	std::cout << "Time [s] = " << std::fixed << std::setprecision(3) << (float)elapsed / frequency << std::endl;
+//	std::cout << "Time [ms] = " << std::setprecision(0) << (1000.0 * elapsed) / frequency << std::endl;
+//	std::cout << "Time [us] = " << std::setprecision(0) << (1000000.0 * elapsed) / frequency << std::endl << std::endl;
+	measure = (1000000.0 * elapsed) / frequency;
 	return measure;
 }

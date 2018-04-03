@@ -24,7 +24,8 @@ private:
 	int index, givenInt, choice;
 	int structureSize = 50;
 	int measurement;
-	int measurementTab[100];
+	int *measurementTab;
+	int numberMeasurments=0;
 public:
 	int *elementsArray; // Contains random Ints to be put in structure
 	//Constructor&Destructor
@@ -49,6 +50,7 @@ public:
 	void measureDEL();
 	void measureFindIndex();
 	void measureContains();
-
+	void setMeasureTabSize();
+	void setStructureSize();
 };
 
