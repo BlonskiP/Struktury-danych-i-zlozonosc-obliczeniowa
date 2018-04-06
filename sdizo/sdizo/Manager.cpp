@@ -117,16 +117,53 @@ void Manager::manualMode()
 	case heap:{std::cout << "Heap" << std::endl; break;}
 	}
 	std::cout << "Actual Size is: " << structureSize << std::endl;
-	std::cout << "Choose operation: " << structureSize << std::endl;
+	std::cout << "Choose operation: " << operationType << std::endl;
 	std::cout << "0. Exit to Main Menu " << std::endl;
 	std::cout << "1. Print Structure " << std::endl;
 	std::cout << "2. Set operacion type (index,beginning,end)" << std::endl;
 	std::cout << "3. Add int to structure"<< std::endl;
-	std::cout << "3. delete int from structure" << std::endl;
+	std::cout << "4. delete int from structure" << std::endl;
 	std::cout << "5. Check if int is in structure" << std::endl;
 	std::cout << "6. Get vaule from index" << std::endl;
 	std::cout << "7. Change Structure" << std::endl;
+	std::cout << "8. Load Structure form txt file" << std::endl;
+	int choice = 0;
+	std::cin >> choice;
+	switch (choice) {
+	case 0: {structureMenu();}
+	case 1: {structure->printAll();  break; }
+	case 2: {setaddSubType();  break; }
+	case 3: {
+		std::cout << "Give me int to add" << std::endl;
+		std::cin >> givenInt;
+		switch (operationType) {
+		case end: {structure->addElement(givenInt);  break; }
+		case beginning: {structure->addElementOnBeginning(givenInt);  break; }
+		case indexType: {
+			
+			std::cin >> index;
+			if (index < structureSize) {
+				structure->addElementOnIndex(givenInt, index);  break;
+			}
+			else
+				std::cout << "On what index? From 0 to " << structureSize - 1 << std::endl;
+			    std::cin >> index;	
+		}
+		}
+
+		structureSize = structure->size;
+	}
+	case 4: {break; }
+	case 5: {break; }
+	case 6: {break; }
+	case 7: {break; }
+	case 8: {break; }
+	case 9: {break; }
+
+	
+	}
 	system("Pause");
+	manualMode();
 }
 
 
@@ -209,6 +246,23 @@ int Manager::getIndex()
 {
 	return 0;
 }
+
+void Manager::ManualModeIndexChoose()
+{//TO DO
+	if (structureExist == true) {
+		std::cout << "On what index? From 0 to " << structureSize-1 << std::endl;
+		std::cin >> index;
+		if (index < structureSize) {
+			structure->addElementOnIndex(givenInt, index);
+		}
+		else
+			ManualModeIndexChoose();
+
+	}
+	else
+		std::cout << "You need to build a structure first" << std::endl; 
+}
+
 
 void Manager::measureADD()
 {
