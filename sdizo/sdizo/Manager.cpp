@@ -63,7 +63,7 @@ void Manager::structureMenu()
 		std::cout << "6.Put structure in file" << std::endl;
 		std::cout << "7.Delete Structure and Create New" << std::endl;
 		std::cout << "8. Set number of measurments (1000 is default)" << std::endl;
-		std::cout << "8. Set structure size" << std::endl;
+		std::cout << "9. Set structure size" << std::endl;
 		std::cout << "0. EXIT" << std::endl;
 		std::cin >> choice;
 		switch (choice) 
