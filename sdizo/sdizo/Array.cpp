@@ -73,12 +73,12 @@ bool Array::contains(int x)
 	{
 		if (*(arrayPointer + i) == x)
 		{
-			std::cout << "found " << x << " Retured true" << std::endl;
+		//	std::cout << "found " << x << " Retured true" << std::endl;
 			return true;
 		}
 	
 	}
-	std::cout << "Coudn't find " << x << " Retured false" << std::endl;
+	//std::cout << "Coudn't find " << x << " Retured false" << std::endl;
 	return false;
 }
 void Array::GetIndexes(int x) 
@@ -103,18 +103,8 @@ void Array::GetIndexes(int x)
 }
 int Array::getVaule(int index) 
 {
-	if (index < maxSize && index >=0)
-	{
-		if (index < size) 
-		{
 			return *(arrayPointer + index);
-		}
-
-
-
-	}
-	else
-	std::cout << "ERROR AT GetInt method: index out of range" << std::endl;
+	
 	
 }
 

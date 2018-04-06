@@ -15,6 +15,7 @@ void List::addElement(int x)
 	{
 		lastElement->next = new Element;
 		lastElement = lastElement->next;
+		lastElement->next = nullptr;
 		lastElement->vaule = x;
 		size++;
 	}
@@ -132,15 +133,21 @@ void List::deleteFirst()
 	}
 }
 void List::clearAll() {
+	Element *tmpNext;
 	elementPointer = firstElement;
-	for (int i = 1; i <= size; i++)
-	{
-		Element *tmpNext;
+	while(true){
+		if(elementPointer->next !=nullptr){
 		tmpNext = elementPointer->next;
 		delete elementPointer;
 		elementPointer = tmpNext;
-		delete tmpNext;
+
+		}
+		else
+			break;
 	}
+	elementPointer = nullptr;
+	firstElement = nullptr;
+	lastElement = nullptr;
 	size = 0;
 
 }
@@ -153,14 +160,14 @@ bool List::contains(int x)
 		if (elementPointer != nullptr)
 		{
 			if (elementPointer->vaule == x) {
-				std::cout << "Znaleziono element " << x << std::endl;
+			//	std::cout << "FOUND: " << x << std::endl;
 				return true;
 			}
 			elementPointer = elementPointer->next;
 		}
 
 	}
-	std::cout << "Brak elementu w liscie :  " << x << std::endl;
+	//std::cout << "No element in the list :  " << x << std::endl;
 	return false;
 }
 

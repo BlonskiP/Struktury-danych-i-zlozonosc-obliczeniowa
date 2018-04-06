@@ -151,6 +151,9 @@ int Heap::pop()
 void Heap::clearAll()
 {
 	delete[] array;
+	size = 0;
+	maxSize = 1;
+	array = new int[maxSize];
 }
 
 void Heap::deleteLastElement()

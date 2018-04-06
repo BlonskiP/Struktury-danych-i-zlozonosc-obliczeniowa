@@ -59,12 +59,11 @@ void Manager::structureMenu()
 		std::cout << "2.Measure DELETE algorithms" << std::endl;
 		std::cout << "3.Measure Search algorithms" << std::endl;
 		std::cout << "4.Measure GetIndex Value algorithms" << std::endl;
-		std::cout << "5.Print structure" << std::endl;
-		std::cout << "6.Put structure in file" << std::endl;
-		std::cout << "7.Delete Structure and Create New" << std::endl;
-		std::cout << "8. Set number of measurments (1000 is default)" << std::endl;
-		std::cout << "9. Set structure size" << std::endl;
-		std::cout << "0. EXIT" << std::endl;
+	    std::cout << "5. Set number of measurments Actual is" << numberMeasurments << std::endl;
+		std::cout << "6. Set structure size. Actual is " << structureSize << std::endl;
+		std::cout << "7. Set add/sub type Actual is " << operationType << std::endl;
+		std::cout << "8. Go To Manual structure mode " << std::endl;
+		std::cout << "0.EXIT " << std::endl;
 		std::cin >> choice;
 		switch (choice) 
 		{
@@ -72,15 +71,10 @@ void Manager::structureMenu()
 		case 2: {measureDEL(); break; }
 		case 3: {measureContains(); break; }
 		case 4: {measureFindIndex(); break; }
-		case 5: {structure->printAll(); break; }
-		case 6: {
-			//TO DO
-			break; }
-		case 7: {
-			//To DO
-			break; }
-		case 8: {setMeasureTabSize(); structureMenu();break; }
-		case 9: {setStructureSize(); structureMenu(); break; }
+		case 5: {setMeasureTabSize(); structureMenu();break; }
+		case 6: {setStructureSize(); structureMenu(); break; }
+		case 7: {setaddSubType(); structureMenu(); break; }
+		case 7: {manualMode(); structureMenu(); break; }
 		case 0: {break; }
 		default: {
 			system("cls");
@@ -98,6 +92,10 @@ void Manager::structureMenu()
 	
 	
 	
+}
+
+void Manager::manualMode()
+{
 }
 
 
@@ -129,6 +127,22 @@ void Manager::fillWithRandom()
 	
 	for (int i = 0; i < structureSize; i++)
 		structure->addElement(elementsArray[i]);
+}
+
+void Manager::deleteRandom()
+{
+	structure->deleteIndex(givenInt);
+
+}
+
+void Manager::containsRandom()
+{
+	structure->contains(givenInt);
+}
+
+void Manager::IsOnIndex()
+{
+	structure->getVaule(givenInt);
 }
 
 //Utility functions
@@ -173,25 +187,50 @@ void Manager::measureADD()
 		structure->clearAll();
 		delete[] elementsArray;
 	}
-	std::cout << "Counting average measurment" << std::endl;
-	measurement = 0;
-	for (int i = 0; i < numberMeasurments; i++) {
-		measurement += measurementTab[i];
-	}
-	measurement = measurement / numberMeasurments;
-	std::cout << "Average time is: " << measurement <<"of add in the end algorithm" << std::endl;
+	countMeasure();
 }
 
 void Manager::measureDEL()
 {
+	for (int i = 0; i < numberMeasurments; i++) {
+		createArrayOfElements();
+		fillWithRandom();
+		delete[] elementsArray;
+		givenInt = rand() % (structureSize);
+		measurementTab[i] = timeCount(&Manager::deleteRandom);
+		structure->clearAll();
+
+	}
+	countMeasure();
 }
 
 void Manager::measureFindIndex()
 {
+	for (int i = 0; i < numberMeasurments; i++) {
+		createArrayOfElements();
+		fillWithRandom();
+		delete[] elementsArray;
+		givenInt = rand() % (structureSize);
+		measurementTab[i] = timeCount(&Manager::IsOnIndex);
+		structure->clearAll();
+
+	}
+	countMeasure();
 }
 
 void Manager::measureContains()
 {
+	for (int i = 0; i < numberMeasurments; i++) {
+		createArrayOfElements();
+		fillWithRandom();
+		delete[] elementsArray;
+		givenInt = rand() % (structureSize);
+		measurementTab[i] = timeCount(&Manager::containsRandom);
+		structure->clearAll();
+
+	}
+	countMeasure();
+
 }
 
 void Manager::setMeasureTabSize()
@@ -221,6 +260,42 @@ void Manager::setStructureSize()
 		std::cin >> structureSize;
 	}
 
+}
+
+void Manager::countMeasure()
+{
+	std::cout << "Counting average measurment" << std::endl;
+	measurement = 0;
+	for (int i = 0; i < numberMeasurments; i++) {
+		measurement += measurementTab[i];
+	}
+	measurement = measurement / numberMeasurments;
+	std::cout << "Average time is: " << measurement << "of add in the end algorithm" << std::endl;
+	system("pause");
+	system("cls");
+	structureMenu();
+}
+
+void Manager::setaddSubType()
+{
+	std::cout << "0 = Add on random index" << std::endl;
+	std::cout << "1 = Add on beginning index" << std::endl;
+	std::cout << "2 = Add on endIndex" << std::endl;
+
+	std::cout << "If structure is a heap remeber that it will be heapified if necessary" << std::endl;
+	int choice = 0;
+	std::cin >> choice;
+	switch (choice) {
+	case 0: {operationType = indexType; break; }
+	case 1: {operationType = beginning; break; }
+	case 2: {operationType = end; break; }
+	default: {
+		
+		system("cls");
+		std::cout << "error. Give me the type! 0 1 2" << std::endl;
+		setaddSubType();
+	}
+	}
 }
 
 
