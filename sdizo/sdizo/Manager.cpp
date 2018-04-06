@@ -74,7 +74,7 @@ void Manager::structureMenu()
 		case 5: {setMeasureTabSize(); structureMenu();break; }
 		case 6: {setStructureSize(); structureMenu(); break; }
 		case 7: {setaddSubType(); structureMenu(); break; }
-		case 7: {manualMode(); structureMenu(); break; }
+		case 8: {structureExist = false;  manualMode(); structureMenu(); break; }
 		case 0: {break; }
 		default: {
 			system("cls");
@@ -96,6 +96,37 @@ void Manager::structureMenu()
 
 void Manager::manualMode()
 {
+	if (structureExist == false) {
+		switch (structureType)
+		{
+		case list: { listPointer = new List(); structure = listPointer;  break; }
+		case heap: { heapPointer = new Heap(); structure = heapPointer;  break; }
+		case array: { arrayPointer = new Array(); structure = arrayPointer;  break; }
+		}
+		structureSize = 0;
+		structureExist = true;
+	}
+	system("cls");
+	std::cout << "Welcome to Manual Mode" << std::endl;
+	std::cout << "Here you wil be able to manipulate the structure!" << std::endl;
+	std::cout << "Your structure is: " << std::endl;
+	switch (structureType)
+	{
+	case list: {std::cout << "List" << std::endl; break; }
+	case array: {std::cout << "Array" << std::endl; break; }
+	case heap:{std::cout << "Heap" << std::endl; break;}
+	}
+	std::cout << "Actual Size is: " << structureSize << std::endl;
+	std::cout << "Choose operation: " << structureSize << std::endl;
+	std::cout << "0. Exit to Main Menu " << std::endl;
+	std::cout << "1. Print Structure " << std::endl;
+	std::cout << "2. Set operacion type (index,beginning,end)" << std::endl;
+	std::cout << "3. Add int to structure"<< std::endl;
+	std::cout << "3. delete int from structure" << std::endl;
+	std::cout << "5. Check if int is in structure" << std::endl;
+	std::cout << "6. Get vaule from index" << std::endl;
+	std::cout << "7. Change Structure" << std::endl;
+	system("Pause");
 }
 
 
