@@ -134,22 +134,24 @@ void List::deleteFirst()
 }
 void List::clearAll() {
 	Element *tmpNext;
-	elementPointer = firstElement;
-	while(true){
-		if(elementPointer->next !=nullptr){
-		tmpNext = elementPointer->next;
-		delete elementPointer;
-		elementPointer = tmpNext;
+	if (elementPointer != nullptr) {
+		elementPointer = firstElement;
+		while (true) {
+			if (elementPointer->next != nullptr) {
+				tmpNext = elementPointer->next;
+				delete elementPointer;
+				elementPointer = tmpNext;
 
+			}
+			else
+				break;
 		}
-		else
-			break;
-	}
-	elementPointer = nullptr;
-	firstElement = nullptr;
-	lastElement = nullptr;
-	size = 0;
+		elementPointer = nullptr;
+		firstElement = nullptr;
+		lastElement = nullptr;
+		size = 0;
 
+	}
 }
 
 bool List::contains(int x)

@@ -135,9 +135,15 @@ void Manager::manualMode()
 		std::cin >> choice;
 		switch (choice) {
 		case 0: {
-			bool exit = true; }
-		case 1: {structure->printAll();  break; }
-		case 2: {setaddSubType();  break; }
+			exit = true; break; }
+		case 1: {structure->printAll(); 
+			system("Pause");
+			system("cls");
+			manualMode(); break;
+			break; }
+		case 2: {setaddSubType(); system("Pause");
+			system("cls");
+			manualMode(); break;  break; }
 		case 3:
 		{
 			getNumber();
@@ -146,7 +152,10 @@ void Manager::manualMode()
 			case end: {structure->addElement(givenInt); structureSize = structure->size;  break; }
 			case beginning: {structure->addElementOnBeginning(givenInt); structureSize = structure->size; break; }
 			case indexType: {ManualModeAddIndexChoose(); break; }
-			}break;
+			}
+			system("Pause");
+			system("cls");
+			manualMode(); break;
 		}
 		case 4: {
 
@@ -156,6 +165,9 @@ void Manager::manualMode()
 			case beginning: {structure->deleteFirst(); structureSize = structure->size; break; }
 			case indexType: {ManualModeSubIndexChoose(); }
 			}
+			system("Pause");
+			system("cls");
+			manualMode(); break;
 			break; }
 		case 5: {
 			getNumber();
@@ -163,7 +175,9 @@ void Manager::manualMode()
 				std::cout << "FOUND IT! There is a: " << givenInt << "in structure" << std::endl;
 			else
 				std::cout << " There is no: " << givenInt << " in structure" << std::endl;
-
+			system("Pause");
+			system("cls");
+			manualMode(); break;
 			break; }
 		case 6: {
 			getNumber();
@@ -171,6 +185,10 @@ void Manager::manualMode()
 				std::cout << "Vaule in the index " << givenInt << "is " << structure->getVaule(givenInt);
 			else
 				std::cout << "Wrong Index! Should be: 0 to " << structureSize - 1 << std::endl;
+
+			system("Pause");
+			system("cls");
+			manualMode(); break;
 			break; }
 		case 7: {
 			std::cout << "You will change structure now. I will rewrite a structure" << std::endl;
@@ -192,27 +210,31 @@ void Manager::manualMode()
 			{
 			case 1: {
 				newType = list;
-				rewriteStructure(list);
 				break; }
 			case 2: {
-				newType = list;
-				rewriteStructure(heap);
+				newType = heap;
+		
 				break; }
 			case 3: {
-				newType = list;
-				rewriteStructure(array);
+				newType = array;
 				break; }
 			case 4: {
-				newType = list;
-				rewriteStructure(redBlackTree);
+				newType = redBlackTree;
 				break; }
 			case 0: {break; }
 			default: {std::cout << "Error give me 0-4" << std::endl; }
 
-
+		
 					 break;
 			}
-		}
+			
+			system("cls");
+			rewriteStructure(newType);
+			structureType = newType;
+			system("Pause");
+			system("cls");
+			manualMode(); break;
+			break; }
 		case 8: {
 			structure->clearAll();
 			std::cout << "Give me the file name" << std::endl;
@@ -238,13 +260,17 @@ void Manager::manualMode()
 			}
 			else
 				std::cout << " ERROR. Coudn't load the file" << std::endl;
+			system("Pause");
+			system("cls");
+			manualMode(); break;
 
+			
+			 }
 
-
-			break; }
-
-
-		}
+		default: {
+			system("cls");
+			manualMode(); }
+		 }
 	}
 	system("Pause");
 	
@@ -509,7 +535,7 @@ void Manager::countMeasure()
 		measurement += measurementTab[i];
 	}
 	measurement = measurement / numberMeasurments;
-	std::cout << "Average time is: " << measurement << "of add in the end algorithm" << std::endl;
+	std::cout << "Average time is: " << measurement << " [us] of add in the end algorithm" << std::endl;
 	system("pause");
 	system("cls");
 	structureMenu();
