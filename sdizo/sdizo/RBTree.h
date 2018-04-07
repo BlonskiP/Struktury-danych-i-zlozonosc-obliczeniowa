@@ -1,7 +1,12 @@
 #pragma once
 #include "Structure.h"
-class RBTree : Structure
+
+
+
+class RBTree : public Structure
 {
+
+
 public:
 	//ADD METHODS
 	void addElement(int x);
@@ -18,5 +23,7 @@ public:
 	RBTree();
 	~RBTree();
 private:
+	
+	
 };
 

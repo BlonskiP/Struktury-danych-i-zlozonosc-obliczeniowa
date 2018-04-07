@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
-
+#include <limits> //for only int input
 //My structures
 #include "Structure.h"
 #include "List.h"
