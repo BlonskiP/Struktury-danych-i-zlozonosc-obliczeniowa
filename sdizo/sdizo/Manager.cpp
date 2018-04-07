@@ -130,13 +130,12 @@ void Manager::manualMode()
 	int choice = 0;
 	std::cin >> choice;
 	switch (choice) {
-	case 0: {structureMenu();}
+	case 0: {structureMenu(); }
 	case 1: {structure->printAll();  break; }
 	case 2: {setaddSubType();  break; }
 	case 3:
 	{
-		std::cout << "Give me int to add" << std::endl;
-		std::cin >> givenInt;
+		getNumber();
 		switch (operationType)
 		{
 		case end: {structure->addElement(givenInt); structureSize = structure->size;  break; }
@@ -145,6 +144,7 @@ void Manager::manualMode()
 		}break;
 	}
 	case 4: {
+
 		switch (operationType)
 		{
 		case end: {structure->deleteLastElement(); structureSize = structure->size;  break; }
@@ -152,9 +152,62 @@ void Manager::manualMode()
 		case indexType: {ManualModeSubIndexChoose(); }
 		}
 		break; }
-	case 5: {break; }
-	case 6: {break; }
-	case 7: {break; }
+	case 5: {
+		getNumber();
+		if (structure->contains(givenInt))
+			std::cout << "FOUND IT! There is a: " << givenInt << "in structure" << std::endl;
+		else
+			std::cout << " There is no: " << givenInt << " in structure" << std::endl;
+
+		break; }
+	case 6: {
+		getNumber();
+		if (givenInt < structureSize && givenInt >= 0)
+			std::cout << "Vaule in the index " << givenInt << "is " << structure->getVaule(givenInt);
+		else
+			std::cout << "Wrong Index! Should be: 0 to " << structureSize - 1 << std::endl;
+		break; }
+	case 7: {
+		std::cout << "You will change structure now. I will rewrite a structure" << std::endl;
+		type newType = structureType;
+		std::cout << "What type should be a new structure?" << std::endl;
+		std::cout << "1.List" << std::endl;
+		std::cout << "2.Heap" << std::endl;
+		std::cout << "3.Array" << std::endl;
+		std::cout << "4.Red-Black Tree" << std::endl;
+		std::cout << "0.Return" << std::endl;
+		int choice = 0;
+		std::cin >> choice;
+		while (choice < 0 || choice >4)
+		{
+			std::cout << "Error give me 0-4" << std::endl;
+			std::cin >> choice;
+		}
+		switch (choice)
+		{
+		case 1: {
+			newType = list;
+			rewriteStructure(list);
+			break; }
+		case 2: {
+			newType = list;
+			rewriteStructure(heap);
+			break; }
+		case 3: {
+			newType = list;
+			rewriteStructure(array);
+			break; }
+		case 4: {
+			newType = list;
+			rewriteStructure(redBlackTree);
+			break; }
+		case 0: {break; }
+		default: {std::cout << "Error give me 0-4" << std::endl; }
+
+
+				 break;
+		}
+	}
 	case 8: {break; }
 	case 9: {break; }
 
@@ -291,6 +344,44 @@ void Manager::ManualModeSubIndexChoose()
 		std::cout << "You need to build a structure first" << std::endl;
 
 	structureSize = structure->size;
+}
+
+void Manager::rewriteStructure(enum type newType)
+{
+	Structure *tmpPointer;
+	switch (newType)
+	{
+	
+	case list: {
+		tmpPointer = new List();
+		for (int i = 0; i < structureSize; i++)
+		{
+			tmpPointer->addElement(structure->getVaule(i));
+			
+		}
+		structure = tmpPointer;
+		break; }
+	case heap: {	tmpPointer = new Heap();
+		for (int i = 0; i < structureSize; i++)
+		{
+			tmpPointer->addElement(structure->getVaule(i));
+
+		}
+		structure = tmpPointer;
+		break; }
+	case redBlackTree: {
+		//TO DO
+		break; }
+	case array: {	tmpPointer = new Array();
+		for (int i = 0; i < structureSize; i++)
+		{
+			tmpPointer->addElement(structure->getVaule(i));
+
+		}
+		structure = tmpPointer;
+		break; }
+	}
+
 }
 
 

@@ -16,7 +16,7 @@ private:
 	Heap * heapPointer;
 	Array * arrayPointer;
 	enum type {
-		list, heap, array
+		list, heap, array,redBlackTree
 	}structureType;
 	bool structureExist;
 	bool found;
@@ -55,6 +55,7 @@ public:
 	int getIndex();
 	void ManualModeAddIndexChoose();
 	void ManualModeSubIndexChoose();
+	void rewriteStructure(enum type);
 	//Measure
 	void measureADD();
 	void measureDEL();
