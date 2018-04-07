@@ -12,12 +12,13 @@ Manager::Manager()
 
 Manager::~Manager()
 {
-	
+	delete structure;
 	
 }
 //Menus
 void Manager::mainMenu()
 {
+#undef max
 	outPutStars();
 	std::cout << "Welcome. Its a project made by Piotr Blonski" << std::endl;
 	std::cout << "It will measure speed of operations on data structures which I implemented" << std::endl;
@@ -28,7 +29,11 @@ void Manager::mainMenu()
 	std::cout << "0. EXIT" << std::endl;
 	outPutStars();
 	std::cout << std::endl;
-	std::cin >> choice;
+	while (!(std::cin >>choice)) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cout << "Invalid input.  Try again: ";
+	}
 	switch (choice)
 	{
 	case 1:structureType = array;  break;
@@ -49,12 +54,13 @@ void Manager::mainMenu()
 
 void Manager::structureMenu()
 {
+#undef max
 	outPutStars();
 	std::cout << "It will measure speed of operations on data structures which I implemented" << std::endl;
 	
 	if (structureExist == true) {
 		std::cout << "Your structure is Ready for experiment" << std::endl;
-		std::cout << "Will make 100 measurments and arithmetic average " << std::endl;
+		std::cout << "Will make  measurments and arithmetic average " << std::endl;
 		std::cout << "1.Measure ADD algorithms" << std::endl;
 		std::cout << "2.Measure DELETE algorithms" << std::endl;
 		std::cout << "3.Measure Search algorithms" << std::endl;
@@ -64,7 +70,11 @@ void Manager::structureMenu()
 		std::cout << "7. Set add/sub type Actual is " << operationType << std::endl;
 		std::cout << "8. Go To Manual structure mode " << std::endl;
 		std::cout << "0.EXIT " << std::endl;
-		std::cin >> choice;
+		while (!(std::cin >> choice)) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Invalid input.  Try again: ";
+		}
 		switch (choice) 
 		{
 		case 1: {measureADD(); break; }
@@ -132,7 +142,12 @@ void Manager::manualMode()
 	bool exit = false;
 	while (exit == false)
 	{
-		std::cin >> choice;
+#undef max
+		while (!(std::cin >> choice)) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Invalid input.  Try again: ";
+		}
 		switch (choice) {
 		case 0: {
 			exit = true; break; }
@@ -200,7 +215,12 @@ void Manager::manualMode()
 			std::cout << "4.Red-Black Tree" << std::endl;
 			std::cout << "0.Return" << std::endl;
 			int choice = 0;
-			std::cin >> choice;
+#undef max
+			while (!(std::cin >> choice)) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cout << "Invalid input.  Try again: ";
+			}
 			while (choice < 0 || choice >4)
 			{
 				std::cout << "Error give me 0-4" << std::endl;
@@ -288,7 +308,10 @@ void Manager::setStructurePointer()
 	}
 	std::cout << "Structure has been created. Size = 0" << std::endl;
 	std::cout << "Going back to StructureMenu " << std::endl;
-	setMeasureTabSize();
+	while (numberMeasurments < 1) {
+		setMeasureTabSize();
+		std::cin.clear();
+	}
 	system("Pause");
 	system("cls");
 	structureExist = true;
@@ -348,7 +371,12 @@ void Manager::outPutStars()
 int Manager::getNumber()
 {
 	std::cout << "Give me int" << std::endl;
-	std::cin >> givenInt;
+#undef max
+	while (!(std::cin >> givenInt)) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cout << "Invalid input.  Try again: ";
+	}
 	return givenInt;
 }
 
@@ -367,7 +395,12 @@ void Manager::ManualModeAddIndexChoose()
 		}
 		else {
 			std::cout << "On what index? From 0 to " << structureSize << std::endl;
-			std::cin >> index;
+#undef max
+			while (!(std::cin >>index)) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cout << "Invalid input.  Try again: ";
+			}
 			if (index <= structureSize) {
 				structure->addElementOnIndex(givenInt, index);
 			}
@@ -390,7 +423,12 @@ void Manager::ManualModeSubIndexChoose()
 		}
 		else {
 			std::cout << "On what index? From 0 to " << structureSize << std::endl;
-			std::cin >> index;
+#undef max
+			while (!(std::cin >> index)) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cout << "Invalid input.  Try again: ";
+			}
 			if (index <= structureSize) {
 				structure->deleteIndex(givenInt);
 			}
@@ -500,16 +538,17 @@ void Manager::measureContains()
 
 void Manager::setMeasureTabSize()
 {
-	
+	using namespace std;
+#undef max
 		std::cout << "How many measurments do you want to do?";
-		std::cin >> numberMeasurments;
-		while (numberMeasurments <= 0)
-		{
-			std::cout << "ERROR";
-			std::cout << "How many measurments do you want to do?";
-			std::cin >> numberMeasurments;
+		while (!(std::cin >> numberMeasurments)) {
+			std::cin.clear();
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Invalid input.  Try again: ";
 		}
 		measurementTab = new int[numberMeasurments];
+		
+		
 	
 }
 
@@ -517,12 +556,22 @@ void Manager::setStructureSize()
 {
 
 	std::cout << "What should be structure END size?";
-	std::cin >> structureSize;
+#undef max
+	while (!(std::cin >> structureSize)) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cout << "Invalid input.  Try again: ";
+	}
 	while (structureSize <= 0)
 	{
 		std::cout << "ERROR";
 		std::cout << "What should be structure END size?";
-		std::cin >> structureSize;
+#undef max
+		while (!(std::cin >> structureSize)) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Invalid input.  Try again: ";
+		}
 	}
 
 }
@@ -549,7 +598,12 @@ void Manager::setaddSubType()
 
 	std::cout << "If structure is a heap remeber that it will be heapified if necessary" << std::endl;
 	int choice = 0;
-	std::cin >> choice;
+#undef max
+	while (!(std::cin >> choice)) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cout << "Invalid input.  Try again: ";
+	}
 	switch (choice) {
 	case 0: {operationType = indexType; break; }
 	case 1: {operationType = beginning; break; }
