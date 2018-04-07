@@ -127,122 +127,127 @@ void Manager::manualMode()
 	std::cout << "6. Get vaule from index" << std::endl;
 	std::cout << "7. Change Structure" << std::endl;
 	std::cout << "8. Load Structure form txt file" << std::endl;
+	std::cout << "9. Load Structure form txt file" << std::endl;
 	int choice = 0;
-	std::cin >> choice;
-	switch (choice) {
-	case 0: {structureMenu(); }
-	case 1: {structure->printAll();  break; }
-	case 2: {setaddSubType();  break; }
-	case 3:
+	bool exit = false;
+	while (exit == false)
 	{
-		getNumber();
-		switch (operationType)
-		{
-		case end: {structure->addElement(givenInt); structureSize = structure->size;  break; }
-		case beginning: {structure->addElementOnBeginning(givenInt); structureSize = structure->size; break; }
-		case indexType: {ManualModeAddIndexChoose(); break; }
-		}break;
-	}
-	case 4: {
-
-		switch (operationType)
-		{
-		case end: {structure->deleteLastElement(); structureSize = structure->size;  break; }
-		case beginning: {structure->deleteFirst(); structureSize = structure->size; break; }
-		case indexType: {ManualModeSubIndexChoose(); }
-		}
-		break; }
-	case 5: {
-		getNumber();
-		if (structure->contains(givenInt))
-			std::cout << "FOUND IT! There is a: " << givenInt << "in structure" << std::endl;
-		else
-			std::cout << " There is no: " << givenInt << " in structure" << std::endl;
-
-		break; }
-	case 6: {
-		getNumber();
-		if (givenInt < structureSize && givenInt >= 0)
-			std::cout << "Vaule in the index " << givenInt << "is " << structure->getVaule(givenInt);
-		else
-			std::cout << "Wrong Index! Should be: 0 to " << structureSize - 1 << std::endl;
-		break; }
-	case 7: {
-		std::cout << "You will change structure now. I will rewrite a structure" << std::endl;
-		type newType = structureType;
-		std::cout << "What type should be a new structure?" << std::endl;
-		std::cout << "1.List" << std::endl;
-		std::cout << "2.Heap" << std::endl;
-		std::cout << "3.Array" << std::endl;
-		std::cout << "4.Red-Black Tree" << std::endl;
-		std::cout << "0.Return" << std::endl;
-		int choice = 0;
 		std::cin >> choice;
-		while (choice < 0 || choice >4)
+		switch (choice) {
+		case 0: {
+			bool exit = true; }
+		case 1: {structure->printAll();  break; }
+		case 2: {setaddSubType();  break; }
+		case 3:
 		{
-			std::cout << "Error give me 0-4" << std::endl;
-			std::cin >> choice;
-		}
-		switch (choice)
-		{
-		case 1: {
-			newType = list;
-			rewriteStructure(list);
-			break; }
-		case 2: {
-			newType = list;
-			rewriteStructure(heap);
-			break; }
-		case 3: {
-			newType = list;
-			rewriteStructure(array);
-			break; }
-		case 4: {
-			newType = list;
-			rewriteStructure(redBlackTree);
-			break; }
-		case 0: {break; }
-		default: {std::cout << "Error give me 0-4" << std::endl; }
-
-
-				 break;
-		}break;
-	}
-	case 8: {
-		structure->clearAll();
-		std::cout << "Give me the file name" << std::endl;
-		std::string fileName;
-		std::cin >> fileName;
-		std::cout << fileName;
-		std::fstream file;
-		file.open(fileName);
-		if (file.is_open())
-		{
-		
-			std::cout << "The file has been loaded" << std::endl;
-			std::string line;
-			getline(file, line);
-			//Geting 1st line as size
-			int StructureFileSize;
-			StructureFileSize = std::stoi(line);
-			for (int i = 0; i < StructureFileSize; i++)
+			getNumber();
+			switch (operationType)
 			{
-				getline(file, line);
-				structure->addElement(std::stoi(line));
+			case end: {structure->addElement(givenInt); structureSize = structure->size;  break; }
+			case beginning: {structure->addElementOnBeginning(givenInt); structureSize = structure->size; break; }
+			case indexType: {ManualModeAddIndexChoose(); break; }
+			}break;
+		}
+		case 4: {
+
+			switch (operationType)
+			{
+			case end: {structure->deleteLastElement(); structureSize = structure->size;  break; }
+			case beginning: {structure->deleteFirst(); structureSize = structure->size; break; }
+			case indexType: {ManualModeSubIndexChoose(); }
+			}
+			break; }
+		case 5: {
+			getNumber();
+			if (structure->contains(givenInt))
+				std::cout << "FOUND IT! There is a: " << givenInt << "in structure" << std::endl;
+			else
+				std::cout << " There is no: " << givenInt << " in structure" << std::endl;
+
+			break; }
+		case 6: {
+			getNumber();
+			if (givenInt < structureSize && givenInt >= 0)
+				std::cout << "Vaule in the index " << givenInt << "is " << structure->getVaule(givenInt);
+			else
+				std::cout << "Wrong Index! Should be: 0 to " << structureSize - 1 << std::endl;
+			break; }
+		case 7: {
+			std::cout << "You will change structure now. I will rewrite a structure" << std::endl;
+			type newType = structureType;
+			std::cout << "What type should be a new structure?" << std::endl;
+			std::cout << "1.List" << std::endl;
+			std::cout << "2.Heap" << std::endl;
+			std::cout << "3.Array" << std::endl;
+			std::cout << "4.Red-Black Tree" << std::endl;
+			std::cout << "0.Return" << std::endl;
+			int choice = 0;
+			std::cin >> choice;
+			while (choice < 0 || choice >4)
+			{
+				std::cout << "Error give me 0-4" << std::endl;
+				std::cin >> choice;
+			}
+			switch (choice)
+			{
+			case 1: {
+				newType = list;
+				rewriteStructure(list);
+				break; }
+			case 2: {
+				newType = list;
+				rewriteStructure(heap);
+				break; }
+			case 3: {
+				newType = list;
+				rewriteStructure(array);
+				break; }
+			case 4: {
+				newType = list;
+				rewriteStructure(redBlackTree);
+				break; }
+			case 0: {break; }
+			default: {std::cout << "Error give me 0-4" << std::endl; }
+
+
+					 break;
 			}
 		}
-		else
-			std::cout << " ERROR. Coudn't load the file" << std::endl;
-		
+		case 8: {
+			structure->clearAll();
+			std::cout << "Give me the file name" << std::endl;
+			std::string fileName;
+			std::cin >> fileName;
+			std::cout << fileName;
+			std::fstream file;
+			file.open(fileName);
+			if (file.is_open())
+			{
+
+				std::cout << "The file has been loaded" << std::endl;
+				std::string line;
+				getline(file, line);
+				//Geting 1st line as size
+				int StructureFileSize;
+				StructureFileSize = std::stoi(line);
+				for (int i = 0; i < StructureFileSize; i++)
+				{
+					getline(file, line);
+					structure->addElement(std::stoi(line));
+				}
+			}
+			else
+				std::cout << " ERROR. Coudn't load the file" << std::endl;
 
 
-		break; }
-	case 9: {break; }
 
-	
+			break; }
+
+
+		}
 	}
 	system("Pause");
-	manualMode();
+	
 }
 
 
