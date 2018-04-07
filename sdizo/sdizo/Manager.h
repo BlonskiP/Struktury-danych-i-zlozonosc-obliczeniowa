@@ -3,6 +3,9 @@
 #include <ctime>
 #include <Windows.h>
 #include <iomanip>
+#include <fstream>
+#include <string>
+
 //My structures
 #include "Structure.h"
 #include "List.h"
@@ -11,6 +14,7 @@
 class Manager
 {
 private:
+	
 	Structure *structure;
 	List * listPointer;
 	Heap * heapPointer;

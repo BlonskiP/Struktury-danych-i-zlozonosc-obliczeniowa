@@ -206,9 +206,37 @@ void Manager::manualMode()
 
 
 				 break;
-		}
+		}break;
 	}
-	case 8: {break; }
+	case 8: {
+		structure->clearAll();
+		std::cout << "Give me the file name" << std::endl;
+		std::string fileName;
+		std::cin >> fileName;
+		std::cout << fileName;
+		std::fstream file;
+		file.open(fileName);
+		if (file.is_open())
+		{
+		
+			std::cout << "The file has been loaded" << std::endl;
+			std::string line;
+			getline(file, line);
+			//Geting 1st line as size
+			int StructureFileSize;
+			StructureFileSize = std::stoi(line);
+			for (int i = 0; i < StructureFileSize; i++)
+			{
+				getline(file, line);
+				structure->addElement(std::stoi(line));
+			}
+		}
+		else
+			std::cout << " ERROR. Coudn't load the file" << std::endl;
+		
+
+
+		break; }
 	case 9: {break; }
 
 	
