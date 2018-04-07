@@ -14,6 +14,7 @@ Array::Array(int size)
 
 Array::~Array()
 {
+	free(arrayPointer);
 }
 
 void Array::addElement(int x) 
@@ -64,6 +65,15 @@ void Array::addElementOnIndex(int x, int index)
 
 	}
 	else
+		if (index == size)
+		{
+			addElement(x);
+		}
+		else if (index == 0)
+		{
+			addElementOnBeginning(x);
+		}
+		else
 		std::cout << "ERROR AT 'addOnIndex' method. Array is not large enough" << std::endl;
 }
 bool Array::contains(int x) 
@@ -72,12 +82,12 @@ bool Array::contains(int x)
 	{
 		if (*(arrayPointer + i) == x)
 		{
-			std::cout << "found " << x << " Retured true" << std::endl;
+		//	std::cout << "found " << x << " Retured true" << std::endl;
 			return true;
 		}
 	
 	}
-	std::cout << "Coudn't find " << x << " Retured false" << std::endl;
+	//std::cout << "Coudn't find " << x << " Retured false" << std::endl;
 	return false;
 }
 void Array::GetIndexes(int x) 
@@ -102,18 +112,8 @@ void Array::GetIndexes(int x)
 }
 int Array::getVaule(int index) 
 {
-	if (index < maxSize && index >=0)
-	{
-		if (index < size) 
-		{
 			return *(arrayPointer + index);
-		}
-
-
-
-	}
-	else
-	std::cout << "ERROR AT GetInt method: index out of range" << std::endl;
+	
 	
 }
 
@@ -152,13 +152,15 @@ void Array::deleteIndex(int index)
 		arrayPointer = (int*)realloc(arrayPointer, size * sizeof(int));
 
 	}
-	else
-		std::cout << "ERROR AT 'addOnIndex' method. Array is not large enough" << std::endl;
+	else if (size == 1 || index > size) { deleteLastElement(); }
+		else std::cout << "ERROR AT 'dekOnIndex' method. Array is not large enough" << std::endl;
 
 }
 
 void Array::clearAll()
 {
-	delete[] arrayPointer;
+	free(arrayPointer);
 	size = 0;
+	maxSize = 0;
+	arrayPointer = (int*)calloc(size, sizeof(int));
 }
