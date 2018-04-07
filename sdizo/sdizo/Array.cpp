@@ -65,6 +65,15 @@ void Array::addElementOnIndex(int x, int index)
 
 	}
 	else
+		if (index == size)
+		{
+			addElement(x);
+		}
+		else if (index == 0)
+		{
+			addElementOnBeginning(x);
+		}
+		else
 		std::cout << "ERROR AT 'addOnIndex' method. Array is not large enough" << std::endl;
 }
 bool Array::contains(int x) 
@@ -143,8 +152,8 @@ void Array::deleteIndex(int index)
 		arrayPointer = (int*)realloc(arrayPointer, size * sizeof(int));
 
 	}
-	else
-		std::cout << "ERROR AT 'addOnIndex' method. Array is not large enough" << std::endl;
+	else if (size == 1 || index > size) { deleteLastElement(); }
+		else std::cout << "ERROR AT 'dekOnIndex' method. Array is not large enough" << std::endl;
 
 }
 

@@ -53,7 +53,8 @@ public:
 	void outPutStars();
 	int getNumber();
 	int getIndex();
-	void ManualModeIndexChoose();
+	void ManualModeAddIndexChoose();
+	void ManualModeSubIndexChoose();
 	//Measure
 	void measureADD();
 	void measureDEL();

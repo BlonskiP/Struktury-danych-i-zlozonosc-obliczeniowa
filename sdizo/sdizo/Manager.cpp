@@ -133,27 +133,25 @@ void Manager::manualMode()
 	case 0: {structureMenu();}
 	case 1: {structure->printAll();  break; }
 	case 2: {setaddSubType();  break; }
-	case 3: {
+	case 3:
+	{
 		std::cout << "Give me int to add" << std::endl;
 		std::cin >> givenInt;
-		switch (operationType) {
-		case end: {structure->addElement(givenInt);  break; }
-		case beginning: {structure->addElementOnBeginning(givenInt);  break; }
-		case indexType: {
-			
-			std::cin >> index;
-			if (index < structureSize) {
-				structure->addElementOnIndex(givenInt, index);  break;
-			}
-			else
-				std::cout << "On what index? From 0 to " << structureSize - 1 << std::endl;
-			    std::cin >> index;	
-		}
-		}
-
-		structureSize = structure->size;
+		switch (operationType)
+		{
+		case end: {structure->addElement(givenInt); structureSize = structure->size;  break; }
+		case beginning: {structure->addElementOnBeginning(givenInt); structureSize = structure->size; break; }
+		case indexType: {ManualModeAddIndexChoose(); break; }
+		}break;
 	}
-	case 4: {break; }
+	case 4: {
+		switch (operationType)
+		{
+		case end: {structure->deleteLastElement(); structureSize = structure->size;  break; }
+		case beginning: {structure->deleteFirst(); structureSize = structure->size; break; }
+		case indexType: {ManualModeSubIndexChoose(); }
+		}
+		break; }
 	case 5: {break; }
 	case 6: {break; }
 	case 7: {break; }
@@ -247,20 +245,52 @@ int Manager::getIndex()
 	return 0;
 }
 
-void Manager::ManualModeIndexChoose()
-{//TO DO
+void Manager::ManualModeAddIndexChoose()
+{
 	if (structureExist == true) {
-		std::cout << "On what index? From 0 to " << structureSize-1 << std::endl;
-		std::cin >> index;
-		if (index < structureSize) {
-			structure->addElementOnIndex(givenInt, index);
+		if (structureSize == 0) {
+			std::cout << "Structure Size is " << structureSize << std::endl;
+			std::cout << "I will add your element on the 0 index " << structureSize << std::endl;
+			structure->addElementOnBeginning(givenInt);
 		}
-		else
-			ManualModeIndexChoose();
+		else {
+			std::cout << "On what index? From 0 to " << structureSize << std::endl;
+			std::cin >> index;
+			if (index <= structureSize) {
+				structure->addElementOnIndex(givenInt, index);
+			}
+			else
+				ManualModeAddIndexChoose();
 
+		}
 	}
 	else
 		std::cout << "You need to build a structure first" << std::endl; 
+
+	structureSize = structure->size;
+}
+
+void Manager::ManualModeSubIndexChoose()
+{
+	if (structureExist == true) {
+		if (structureSize == 0) {
+			std::cout << "Structure is already empty " << std::endl;	
+		}
+		else {
+			std::cout << "On what index? From 0 to " << structureSize << std::endl;
+			std::cin >> index;
+			if (index <= structureSize) {
+				structure->deleteIndex(givenInt);
+			}
+			else
+				ManualModeSubIndexChoose();
+
+		}
+	}
+	else
+		std::cout << "You need to build a structure first" << std::endl;
+
+	structureSize = structure->size;
 }
 
 
