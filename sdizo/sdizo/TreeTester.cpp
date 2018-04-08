@@ -11,7 +11,8 @@ int main() {
 	{
 		x->addElement(std::rand()%100);
 	}
-	
+	x->addElement(50);
+	x->deleteIndex(123123);
 	x->printAll();
 	system("pause");
 	return 0;

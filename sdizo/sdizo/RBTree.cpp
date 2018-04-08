@@ -47,27 +47,27 @@ void RBTree::print(std::string sp, std::string sn, Node * pointer)
 
 void RBTree::rotateRight(Node * node)
 {
-	Node *brother, *parent;
+	Node *son, *parent;
 
-	brother = node->left;
-	if (brother != &guard)
+	son = node->left;
+	if (son != &guard)
 	{
 		parent = node->parent;
-		node->left = brother->right;
+		node->left = son->right;
 		if (node->left != &guard)
 			node->left->parent = node;
 
-		brother->right= node;
-		brother->parent = parent;
-		node->parent = brother;
+		son->right= node;
+		son->parent = parent;
+		node->parent =son;
 		if (parent != &guard)
 		{
 			if (parent->left == node)
-				parent->left = brother;
+				parent->left = son;
 			else
-				parent->right = brother;
+				parent->right =son;
 		}
-		else root = brother;
+		else root = son;
 
 	}
 
@@ -190,16 +190,165 @@ void RBTree::addElementOnBeginning(int x)
 {
 }
 
+void RBTree::deleteNode(Node *node)
+{
+	Node * W, *Y, *Z;
+
+	if ((node->left == &guard) || (node->right == &guard))
+		Y = node;
+	else                                  
+		Y = succesor(node);
+
+	if (Y->left != &guard) 
+		Z = Y->left;
+	else            
+		Z = Y->right;
+
+	Z->parent = Y->parent;
+
+	if (Y->parent == &guard) 
+		root = Z;
+	else 
+		if (Y == Y->parent->left) 
+				Y->parent->left = Z;
+	else                     
+		Y->parent->right = Z;
+
+	if (Y != node) 
+		node->value = Y->value;
+
+	if (Y->color == 'B')  
+		while ((Z != root) && (Z->color == 'B'))
+			if (Z == Z->parent->left)
+			{
+				W = Z->parent->right;
+
+				if (W->color == 'R')
+				{              // situation 1
+					W->color = black;
+					Z->parent->color = red;
+					rotateLeft(Z->parent);
+					W = Z->parent->right;
+				}
+
+				if ((W->left->color == 'B') && (W->right->color == 'B'))
+				{              // situation 2
+					W->color = red;
+					Z = Z->parent;
+					continue;
+				}
+
+				if (W->right->color == 'B')
+				{              // situation 3
+					W->left->color = black;
+					W->color = red;
+					rotateRight(W);
+					W = Z->parent->right;
+				}
+
+				W->color = Z->parent->color; // situation 4
+				Z->parent->color = black;
+				W->right->color = black;
+				rotateLeft(Z->parent);
+				Z = root;        
+			}
+			else
+			{                // Mirror
+				W = Z->parent->left;
+
+				if (W->color == 'R')
+				{              // situation 1
+					W->color = black;
+					Z->parent->color = red;
+					rotateRight(Z->parent);
+					W = Z->parent->left;
+				}
+
+				if ((W->left->color == 'B') && (W->right->color == 'B'))
+				{              // situation 2
+					W->color = red;
+					Z = Z->parent;
+					continue;
+				}
+
+				if (W->left->color == 'B')
+				{              // situation 3
+					W->right->color = black;
+					W->color = red;
+					rotateLeft(W);
+					W = Z->parent->left;
+				}
+
+				W->color = Z->parent->color;  // situation 4
+				Z->parent->color = black;
+				W->left->color = black;
+				rotateRight(Z->parent);
+				Z = root;        
+			}
+
+	Z->color = black;
+
+	delete Y;
+}
+
+Node *RBTree::succesor(Node * node)
+{
+	Node* temp;
+	if (node != &guard)
+	{
+		if (node->right != &guard) return minNode(node->right);
+		else
+		{
+			temp = node->parent;
+			while ((temp != &guard) && (node == temp->right))
+			{
+				node = temp;
+				temp = temp->parent;
+			}
+			return temp;
+		}
+	}
+	return &guard;
+}
+
+Node * RBTree::minNode(Node * node)
+{
+	if (node != &guard)
+		while (node->left != &guard) node = node->left;
+
+	return node;
+	
+}
+
+Node * RBTree::findNodeWithValue(int value)
+{
+	Node *temp;
+	temp = root;
+	while ((temp != &guard) && (temp->value != value))
+	if (value < temp->value)
+		temp = temp->left;
+	else
+		temp = temp->right;
+	if (temp == &guard) return NULL;
+	return temp;
+}
+
 void RBTree::deleteLastElement()
 {
+
+
 }
 
 void RBTree::deleteIndex(int index)
 {
+	Node *temp = findNodeWithValue(index);
+	if(temp!=nullptr)
+	deleteNode(temp);
 }
 
 void RBTree::deleteFirst()
 {
+	deleteNode(root);
 }
 
 void RBTree::printAll()

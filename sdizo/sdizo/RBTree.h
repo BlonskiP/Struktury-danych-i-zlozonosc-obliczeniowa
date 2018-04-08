@@ -25,7 +25,7 @@ class RBTree : public Structure
 
 public:
 	//ADD METHODS
-	void addElement(int x);
+	void addElement(int x); //done
 	void addElementOnIndex(int x, int index);
 	void addElementOnBeginning(int x);
 	//DEL METHODS
@@ -46,6 +46,9 @@ private:
 	void print(std::string sp, std::string sn, Node * p); //Same in heap
 	void rotateRight(Node *node);
 	void rotateLeft(Node *node);
-	
+	void deleteNode(Node *node);
+	Node  *succesor(Node *node);
+	Node  *minNode(Node *node); //finds lowest node
+	Node  *findNodeWithValue(int index);
 };
 
