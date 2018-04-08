@@ -159,8 +159,10 @@ void Array::deleteIndex(int index)
 
 void Array::clearAll()
 {
-	free(arrayPointer);
-	size = 0;
-	maxSize = 0;
-	arrayPointer = (int*)calloc(size, sizeof(int));
+	if (size != 0) {
+		free(arrayPointer);
+		size = 0;
+		maxSize = 0;
+		arrayPointer = (int*)calloc(size, sizeof(int));
+	}
 }

@@ -11,6 +11,7 @@
 #include "List.h"
 #include "Array.h"
 #include "Heap.h"
+#include "RBTree.h"
 class Manager
 {
 private:
@@ -19,6 +20,7 @@ private:
 	List * listPointer;
 	Heap * heapPointer;
 	Array * arrayPointer;
+	RBTree * treePointer;
 	enum type {
 		list, heap, array,redBlackTree
 	}structureType;

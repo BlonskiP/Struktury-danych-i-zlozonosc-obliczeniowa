@@ -21,6 +21,7 @@ RBTree::RBTree()
 
 RBTree::~RBTree()
 {
+	clearAll();
 }
 
 void RBTree::print(std::string sp, std::string sn, Node * pointer)
@@ -333,6 +334,16 @@ Node * RBTree::findNodeWithValue(int value)
 	return temp;
 }
 
+void RBTree::clearNode(Node * node)
+{
+	if (node != &guard)
+	{
+		clearNode(node->left);   // usuwamy lewe poddrzewo
+		clearNode(node->right);  // usuwamy prawe poddrzewo
+		delete node;              // usuwamy sam wêze³
+	}
+}
+
 void RBTree::deleteLastElement()
 {
 
@@ -362,8 +373,13 @@ int RBTree::getVaule(int index)
 }
 
 void RBTree::clearAll()
-{
-
+{	
+	if (root != &guard)
+	{
+		clearNode(root->left);   // usuwamy lewe poddrzewo
+		clearNode(root->right);  // usuwamy prawe poddrzewo
+		delete root;              // usuwamy sam wêze³
+	}
 }
 
 bool RBTree::contains(int x)

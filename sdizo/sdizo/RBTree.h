@@ -50,5 +50,6 @@ private:
 	Node  *succesor(Node *node);
 	Node  *minNode(Node *node); //finds lowest node
 	Node  *findNodeWithValue(int index);
+	void clearNode(Node *node);
 };
 
