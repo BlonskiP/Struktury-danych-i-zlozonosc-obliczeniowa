@@ -1,5 +1,7 @@
 #pragma once
 #include "Structure.h"
+#include <string>
+#include <windows.h> //for coloring console
 enum nodeColor {
 	black, red
 
@@ -37,10 +39,13 @@ public:
 	RBTree();
 	~RBTree();
 private:
-	Node *guard;
+	HANDLE hOut;//console handle for colors
+	Node guard;
 	Node * root;
 	std::string cr, cl, cp;
 	void print(std::string sp, std::string sn, Node * p); //Same in heap
+	void rotateRight(Node *node);
+	void rotateLeft(Node *node);
 	
 };
 

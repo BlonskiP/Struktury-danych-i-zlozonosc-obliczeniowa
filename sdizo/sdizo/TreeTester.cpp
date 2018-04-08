@@ -7,8 +7,12 @@ int main() {
 
 	Structure *x;
 	x = new RBTree();
-	x->addElement(3);
-
+	for (int i = 0; i < 20; i++)
+	{
+		x->addElement(std::rand()%100);
+	}
+	
+	x->printAll();
 	system("pause");
 	return 0;
 }
