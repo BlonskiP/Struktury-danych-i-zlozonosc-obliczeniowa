@@ -1,5 +1,19 @@
 #pragma once
 #include "Structure.h"
+enum nodeColor {
+	black, red
+
+};
+
+struct Node 
+{
+	Node *parent;
+	Node *left;
+	Node *right;
+	int value;
+	nodeColor color;
+};
+
 
 
 
@@ -23,7 +37,10 @@ public:
 	RBTree();
 	~RBTree();
 private:
-	
+	Node *guard;
+	Node * root;
+	std::string cr, cl, cp;
+	void print(std::string sp, std::string sn, Node * p); //Same in heap
 	
 };
 

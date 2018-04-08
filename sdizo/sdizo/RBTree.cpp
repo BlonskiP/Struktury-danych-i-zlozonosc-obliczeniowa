@@ -4,10 +4,26 @@
 
 RBTree::RBTree()
 {
+	cr = cl = cp = "  ";
+	cr[0] = 218; cr[1] = 196;
+	cl[0] = 192; cl[1] = 196;
+	cp[0] = 179;
+	// Guard is initialized
+	guard = new Node(); 
+	guard->color = black; //always black         
+	guard->parent = guard; //all guards pointers points himself
+	guard->left = guard;
+	guard->right = guard;
+	root = guard;           // When there is no nodes. Root will point guard
+
 }
 
 
 RBTree::~RBTree()
+{
+}
+
+void RBTree::print(std::string sp, std::string sn, Node * p)
 {
 }
 
