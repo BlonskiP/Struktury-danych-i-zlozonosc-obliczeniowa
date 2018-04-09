@@ -9,7 +9,7 @@ void List::addElement(int x)
 		firstElement = new Element;
 		firstElement->vaule = x;
 		lastElement = firstElement;
-		size++;
+	
 	}
 	else
 	{
@@ -17,9 +17,9 @@ void List::addElement(int x)
 		lastElement = lastElement->next;
 		lastElement->next = nullptr;
 		lastElement->vaule = x;
-		size++;
+		
 	}
-
+	size++;
 }
 void List::printAll()
 {
@@ -53,30 +53,31 @@ int List::getVaule(int index)
 }
 void List::addElementOnIndex(int x, int index)
 {
-	Element *tmp;
-	elementPointer = firstElement;
-	if (size == 0) addElement(x);
-	else 
-	{
-		for (int i = 1; i < index-1; i++)
+	if (index < size) {
+		Element *tmp;
+		elementPointer = firstElement;
+		if (size == 0) addElement(x);
+		else
 		{
-			if (elementPointer != nullptr)
+			for (int i = 1; i < index - 1; i++)
 			{
-				elementPointer = elementPointer->next;
-			}
-			
-		}
-		//Adding a new element between them
-		
-		tmp = elementPointer->next;
-		elementPointer->next = new Element;
-		elementPointer->next->vaule = x;
-		elementPointer->next->next = tmp;
-		size++;
-		
+				if (elementPointer != nullptr)
+				{
+					elementPointer = elementPointer->next;
+				}
 
+			}
+			//Adding a new element between them
+
+			tmp = elementPointer->next;
+			elementPointer->next = new Element;
+			elementPointer->next->vaule = x;
+			elementPointer->next->next = tmp;
+			size++;
+
+
+		}
 	}
-	
 }
 void List::addElementOnBeginning(int x){
 	if (size != 0) {

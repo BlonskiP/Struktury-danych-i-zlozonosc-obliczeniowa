@@ -73,8 +73,8 @@ void Array::addElementOnIndex(int x, int index)
 		{
 			addElementOnBeginning(x);
 		}
-		else
-		std::cout << "ERROR AT 'addOnIndex' method. Array is not large enough" << std::endl;
+		else {}
+		//std::cout << "ERROR AT 'addOnIndex' method. Array is not large enough" << std::endl;
 }
 bool Array::contains(int x) 
 {
@@ -153,7 +153,8 @@ void Array::deleteIndex(int index)
 
 	}
 	else if (size == 1 || index > size) { deleteLastElement(); }
-		else std::cout << "ERROR AT 'dekOnIndex' method. Array is not large enough" << std::endl;
+	else {}
+			//std::cout << "ERROR AT 'dekOnIndex' method. Array is not large enough" << std::endl;
 
 }
 
@@ -163,6 +164,6 @@ void Array::clearAll()
 		free(arrayPointer);
 		size = 0;
 		maxSize = 0;
-		arrayPointer = (int*)calloc(size, sizeof(int));
+		arrayPointer = (int*)calloc(size+1, sizeof(int));
 	}
 }

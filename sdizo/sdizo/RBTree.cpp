@@ -14,7 +14,8 @@ RBTree::RBTree()
 	guard.parent = &guard; //all guards pointers points himself
 	guard.left = &guard;
 	guard.right = &guard;
-	root = &guard;           // When there is no nodes. Root will point guard
+	root = &guard;     // When there is no nodes. Root will point guard
+	size = 0;
 
 }
 
@@ -103,6 +104,7 @@ void RBTree::rotateLeft(Node * node)
 
 void RBTree::addElement(int x)
 {
+	size++;
 	Node * newNode, *uncle;
 	newNode = new Node();
 	newNode->left = &guard;//new nodes childer should be guard
@@ -193,6 +195,7 @@ void RBTree::addElementOnBeginning(int x)
 
 void RBTree::deleteNode(Node *node)
 {
+	size--;
 	Node * W, *Y, *Z;
 
 	if ((node->left == &guard) || (node->right == &guard))
@@ -379,10 +382,24 @@ void RBTree::clearAll()
 		clearNode(root->left);   // usuwamy lewe poddrzewo
 		clearNode(root->right);  // usuwamy prawe poddrzewo
 		delete root;              // usuwamy sam wêze³
+		guard.color = black; //always black         
+		guard.parent = &guard; //all guards pointers points himself
+		guard.left = &guard;
+		guard.right = &guard;
+		root = &guard;     // When there is no nodes. Root will point guard
+		size = 0;
+
 	}
+
+
 }
 
 bool RBTree::contains(int x)
 {
-	return false;
+	if (findNodeWithValue(x) != nullptr)
+	{
+		return true;
+	}
+	else
+		return false;
 }

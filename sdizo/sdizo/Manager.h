@@ -51,7 +51,11 @@ public:
 	void setStructurePointer();
 	void createStructure();
 	void fillWithRandom();
+	void fillOnRandomIndex();
+	void addOnBeginning();
 	void deleteRandom();
+	void deleteFirst();
+	void deleteLast();
 	void containsRandom();
 	void IsOnIndex();
 	//Utility
