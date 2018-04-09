@@ -94,7 +94,19 @@ void Manager::structureMenu()
 		{
 		case 1: {measureADD(); break; }
 		case 2: {measureDEL(); break; }
-		case 3: {measureContains(); break; }
+		case 3: {	
+			for (int i = 0; i < numberMeasurments; i++) 
+			{
+				createArrayOfElements();
+				fillWithRandom();
+				delete[] elementsArray;
+				givenInt = (rand() % structureSize + ((int)structureSize / 10));
+				measurementTab[i] = timeCount(&Manager::containsRandom);
+				structure->clearAll();
+
+			}
+			countMeasure();
+			break; }
 		case 4: {
 			if (structureType == list || structureType == array) {
 				measureFindIndex();
@@ -468,9 +480,14 @@ void Manager::fillWithRandom()
 		structure->addElement(elementsArray[i]);
 }
 
+void Manager::addOnEnd()
+{
+	structure->addElement(givenInt);
+}
+
 void Manager::fillOnRandomIndex()
 {
-		structure->addElementOnIndex(givenInt, elementsArray[givenInt]);
+		structure->addElementOnIndex(givenInt, elementsArray[givenInt-((int)structureSize/10)]);
 }
 
 void Manager::addOnBeginning()
@@ -480,7 +497,7 @@ void Manager::addOnBeginning()
 
 void Manager::deleteRandom()
 {
-	structure->deleteIndex(givenInt);
+	structure->deleteIndex(givenInt - ((int)structureSize / 10));
 
 }
 
@@ -672,7 +689,7 @@ void Manager::measureADD()
 				{
 				createArrayOfElements();
 				fillWithRandom();
-				givenInt = rand() % structureSize;
+				givenInt = (rand() % structureSize + ((int)structureSize/10));
 				measurementTab[i] = timeCount(&Manager::fillOnRandomIndex);
 				structure->clearAll();
 				delete[] elementsArray;
@@ -698,7 +715,7 @@ void Manager::measureADD()
 			{
 				createArrayOfElements();
 				fillWithRandom();
-				measurementTab[i] = timeCount(&Manager::fillWithRandom);
+				measurementTab[i] = timeCount(&Manager::addOnEnd);
 				delete[] elementsArray;
 				
 			}
@@ -738,7 +755,7 @@ void Manager::measureDEL()
 			{
 				createArrayOfElements();
 				fillWithRandom();
-				givenInt = rand() % structureSize;
+				givenInt = (rand() % structureSize + ((int)structureSize / 10));
 				measurementTab[i] = timeCount(&Manager::deleteRandom);
 				structure->clearAll();
 				delete[] elementsArray;
@@ -798,18 +815,19 @@ void Manager::measureFindIndex()
 
 void Manager::measureContains()
 {
-	for (int i = 0; i < numberMeasurments; i++) {
-		createArrayOfElements();
-		fillWithRandom();
-		delete[] elementsArray;
-		givenInt = rand() % (structureSize);
-		measurementTab[i] = timeCount(&Manager::containsRandom);
-		structure->clearAll();
+		for (int i = 0; i < numberMeasurments; i++) {
+			createArrayOfElements();
+			fillWithRandom();
+			delete[] elementsArray;
+			givenInt = (rand() % structureSize + ((int)structureSize / 10));
+			measurementTab[i] = timeCount(&Manager::containsRandom);
+			structure->clearAll();
 
-	}
-	countMeasure();
+		}
+		countMeasure();
 
 }
+
 
 void Manager::setMeasureTabSize()
 {

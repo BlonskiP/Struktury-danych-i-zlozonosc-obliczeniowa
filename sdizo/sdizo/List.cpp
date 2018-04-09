@@ -80,15 +80,20 @@ void List::addElementOnIndex(int x, int index)
 	}
 }
 void List::addElementOnBeginning(int x){
-	if (size != 0) {
+	if (firstElement != nullptr) {
 		elementPointer = firstElement;
 		firstElement = new Element;
 		firstElement->next = elementPointer;
 		firstElement->vaule = x;
+		lastElement = firstElement;
 		size++;
 	}
 	else
-		addElement(x);
+	{
+		firstElement = new Element();
+		firstElement->vaule = x;
+		firstElement->next = nullptr;
+	}
 }
 void List::deleteLastElement()
 {
@@ -173,6 +178,8 @@ bool List::contains(int x)
 	//std::cout << "No element in the list :  " << x << std::endl;
 	return false;
 }
+
+
 
 List::List()
 {//Constructor with cleaning

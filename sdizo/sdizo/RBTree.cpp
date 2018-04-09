@@ -370,9 +370,15 @@ void RBTree::printAll()
 	print("", "", root);
 }
 
-int RBTree::getVaule(int index)
+int RBTree::getVaule(int index) //method used for rewriting only
 {
-	return 0;
+	if (size > 0) {
+		int temp;
+		temp = root->value;
+		deleteNode(root);
+		return temp;
+	}
+
 }
 
 void RBTree::clearAll()
