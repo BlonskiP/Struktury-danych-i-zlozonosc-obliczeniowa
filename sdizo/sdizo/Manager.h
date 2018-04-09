@@ -5,12 +5,13 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
-
+#include <limits> //for only int input
 //My structures
 #include "Structure.h"
 #include "List.h"
 #include "Array.h"
 #include "Heap.h"
+#include "RBTree.h"
 class Manager
 {
 private:
@@ -19,6 +20,7 @@ private:
 	List * listPointer;
 	Heap * heapPointer;
 	Array * arrayPointer;
+	RBTree * treePointer;
 	enum type {
 		list, heap, array,redBlackTree
 	}structureType;
@@ -49,7 +51,12 @@ public:
 	void setStructurePointer();
 	void createStructure();
 	void fillWithRandom();
+	void addOnEnd();
+	void fillOnRandomIndex();
+	void addOnBeginning();
 	void deleteRandom();
+	void deleteFirst();
+	void deleteLast();
 	void containsRandom();
 	void IsOnIndex();
 	//Utility

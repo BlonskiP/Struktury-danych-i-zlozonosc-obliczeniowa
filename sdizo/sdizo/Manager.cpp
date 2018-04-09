@@ -12,12 +12,14 @@ Manager::Manager()
 
 Manager::~Manager()
 {
-	
+	delete structure;
 	
 }
 //Menus
 void Manager::mainMenu()
 {
+	
+#undef max
 	outPutStars();
 	std::cout << "Welcome. Its a project made by Piotr Blonski" << std::endl;
 	std::cout << "It will measure speed of operations on data structures which I implemented" << std::endl;
@@ -25,15 +27,21 @@ void Manager::mainMenu()
 	std::cout << "1. Array" << std::endl;
 	std::cout << "2. List" << std::endl;
 	std::cout << "3. Heap" << std::endl;
+	std::cout << "4. Red Black Tree" << std::endl;
 	std::cout << "0. EXIT" << std::endl;
 	outPutStars();
 	std::cout << std::endl;
-	std::cin >> choice;
+	while (!(std::cin >>choice)) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cout << "Invalid input.  Try again: ";
+	}
 	switch (choice)
 	{
 	case 1:structureType = array;  break;
 	case 2:structureType = list; break;
 	case 3:structureType = heap; break;
+	case 4:structureType = redBlackTree; break;
 	case 0: exit = true; break;
 	default:
 		{system("cls");
@@ -49,32 +57,140 @@ void Manager::mainMenu()
 
 void Manager::structureMenu()
 {
+	delete measurementTab;
+	measurementTab = new int[numberMeasurments]; //clear table
+#undef max
 	outPutStars();
 	std::cout << "It will measure speed of operations on data structures which I implemented" << std::endl;
 	
 	if (structureExist == true) {
+		structure->clearAll();
 		std::cout << "Your structure is Ready for experiment" << std::endl;
-		std::cout << "Will make 100 measurments and arithmetic average " << std::endl;
+		std::cout << "Will make  measurments and arithmetic average " << std::endl;
 		std::cout << "1.Measure ADD algorithms" << std::endl;
 		std::cout << "2.Measure DELETE algorithms" << std::endl;
 		std::cout << "3.Measure Search algorithms" << std::endl;
-		std::cout << "4.Measure GetIndex Value algorithms" << std::endl;
+		std::cout << "4 .(List and Array) .Measure GetIndex Value algorithms" << std::endl;
 	    std::cout << "5. Set number of measurments Actual is" << numberMeasurments << std::endl;
 		std::cout << "6. Set structure size. Actual is " << structureSize << std::endl;
-		std::cout << "7. Set add/sub type Actual is " << operationType << std::endl;
+		std::cout << "7.(List and Array) Set add/sub type Actual is " << operationType << std::endl;
 		std::cout << "8. Go To Manual structure mode " << std::endl;
+		std::cout << "9. Change Structure: " << std::endl;
 		std::cout << "0.EXIT " << std::endl;
-		std::cin >> choice;
+		std::cout << "Your structure is: " << std::endl;
+		switch (structureType)
+		{
+		case list: {std::cout << "List" << std::endl; break; }
+		case array: {std::cout << "Array" << std::endl; break; }
+		case heap: {std::cout << "Heap" << std::endl; break; }
+		case redBlackTree: {std::cout << "Red Black Tree" << std::endl; break; }
+		}
+		while (!(std::cin >> choice)) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Invalid input.  Try again: ";
+		}
 		switch (choice) 
 		{
 		case 1: {measureADD(); break; }
 		case 2: {measureDEL(); break; }
-		case 3: {measureContains(); break; }
-		case 4: {measureFindIndex(); break; }
+		case 3: {	
+			for (int i = 0; i < numberMeasurments; i++) 
+			{
+				createArrayOfElements();
+				fillWithRandom();
+				delete[] elementsArray;
+				givenInt = (rand() % structureSize + ((int)structureSize / 10));
+				measurementTab[i] = timeCount(&Manager::containsRandom);
+				structure->clearAll();
+
+			}
+			countMeasure();
+			break; }
+		case 4: {
+			if (structureType == list || structureType == array) {
+				measureFindIndex();
+			}
+			else {
+				std::cout << "Your structure type must be array or list" << std::endl;
+				system("pause");
+				system("cls");
+			}
+			structureMenu();
+				break; }
 		case 5: {setMeasureTabSize(); structureMenu();break; }
 		case 6: {setStructureSize(); structureMenu(); break; }
-		case 7: {setaddSubType(); structureMenu(); break; }
+		case 7: {
+			if (structureType == list || structureType == array) {
+				setaddSubType();
+			}
+			else 
+			{
+				std::cout << "Your structure type must be array or list" << std::endl;
+				system("pause");
+				system("cls");
+			}
+			structureMenu();
+			 break; }
 		case 8: {structureExist = false;  manualMode(); structureMenu(); break; }
+		case 9: {
+			type newType = structureType;
+			std::cout << "What type should be a new structure?" << std::endl;
+			std::cout << "1.List" << std::endl;
+			std::cout << "2.Heap" << std::endl;
+			std::cout << "3.Array" << std::endl;
+			std::cout << "4.Red-Black Tree" << std::endl;
+			std::cout << "0.Return" << std::endl;
+			int choice = 0;
+#undef max
+			while (!(std::cin >> choice)) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cout << "Invalid input.  Try again: ";
+			}
+			while (choice < 0 || choice >4)
+			{
+				std::cout << "Error give me 0-4" << std::endl;
+				std::cin >> choice;
+			}
+			switch (choice)
+			{
+			case 1: {
+				newType = list;
+				structureType = newType;
+				listPointer = new List();
+				structure = listPointer;
+				break; }
+			case 2: {
+				newType = heap;
+				structureType = newType;
+				heapPointer = new Heap();
+				structure = heapPointer;
+				break; }
+			case 3: {
+				newType = array;
+				structureType = newType;
+				arrayPointer = new Array();
+				structure = arrayPointer;
+				break; }
+			case 4: {
+				newType = redBlackTree;
+				structureType = newType;
+				treePointer = new RBTree();
+				structure = treePointer;
+				break; }
+			case 0: {break; }
+			default: {std::cout << "Error give me 0-4" << std::endl; }
+
+
+					 break;
+			}
+			
+
+			system("cls");
+			structureMenu();
+			break; 
+		}//to do
 		case 0: {break; }
 		default: {
 			system("cls");
@@ -96,12 +212,14 @@ void Manager::structureMenu()
 
 void Manager::manualMode()
 {
+	structureSize = structure->size;
 	if (structureExist == false) {
 		switch (structureType)
 		{
 		case list: { listPointer = new List(); structure = listPointer;  break; }
 		case heap: { heapPointer = new Heap(); structure = heapPointer;  break; }
 		case array: { arrayPointer = new Array(); structure = arrayPointer;  break; }
+		case redBlackTree: {treePointer = new RBTree(); structure = treePointer;  break; }
 		}
 		structureSize = 0;
 		structureExist = true;
@@ -115,63 +233,126 @@ void Manager::manualMode()
 	case list: {std::cout << "List" << std::endl; break; }
 	case array: {std::cout << "Array" << std::endl; break; }
 	case heap:{std::cout << "Heap" << std::endl; break;}
+	case redBlackTree:{ std::cout << "Red Black Tree" << std::endl; break; }
 	}
 	std::cout << "Actual Size is: " << structureSize << std::endl;
 	std::cout << "Choose operation: " << operationType << std::endl;
 	std::cout << "0. Exit to Main Menu " << std::endl;
 	std::cout << "1. Print Structure " << std::endl;
-	std::cout << "2. Set operacion type (index,beginning,end)" << std::endl;
+	std::cout << "2. Set operacion type (index,beginning,end For List and Array)" << std::endl;
 	std::cout << "3. Add int to structure"<< std::endl;
 	std::cout << "4. delete int from structure" << std::endl;
 	std::cout << "5. Check if int is in structure" << std::endl;
-	std::cout << "6. Get vaule from index" << std::endl;
+	std::cout << "6. Get vaule from index(Not for Red Black Tree)" << std::endl;
 	std::cout << "7. Change Structure" << std::endl;
 	std::cout << "8. Load Structure form txt file" << std::endl;
-	std::cout << "9. Load Structure form txt file" << std::endl;
 	int choice = 0;
 	bool exit = false;
 	while (exit == false)
 	{
-		std::cin >> choice;
+#undef max
+		while (!(std::cin >> choice)) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Invalid input.  Try again: ";
+		}
 		switch (choice) {
 		case 0: {
-			bool exit = true; }
-		case 1: {structure->printAll();  break; }
-		case 2: {setaddSubType();  break; }
+			exit = true; break; }
+		case 1: {structure->printAll(); 
+			system("Pause");
+			system("cls");
+			manualMode(); break;
+			break; }
+		case 2: {setaddSubType(); system("Pause");
+			system("cls");
+			manualMode(); break;  break; }
 		case 3:
 		{
 			getNumber();
-			switch (operationType)
+			if (structureType == heap || structureType == redBlackTree)
 			{
+				structure->addElement(givenInt); structureSize = structure->size;
+			}else{
+			switch (operationType)
+				{
+				
+				
 			case end: {structure->addElement(givenInt); structureSize = structure->size;  break; }
 			case beginning: {structure->addElementOnBeginning(givenInt); structureSize = structure->size; break; }
 			case indexType: {ManualModeAddIndexChoose(); break; }
-			}break;
+				}
+			}
+			system("Pause");
+			system("cls");
+			manualMode(); break;
 		}
-		case 4: {
-
-			switch (operationType)
+		case 4:
+		{
+			if (structureSize <= 0)
 			{
+				std::cout << "Structure is empty" << std::endl;
+				break;
+			}
+			if (structureType == heap || structureType == redBlackTree)
+			{
+				std::cout << "I will delete given int if it exist" << std::endl;
+				getNumber();
+				structure->deleteIndex(givenInt);
+			}else
+			{
+			switch (operationType)
+				{
+				
+				 
 			case end: {structure->deleteLastElement(); structureSize = structure->size;  break; }
 			case beginning: {structure->deleteFirst(); structureSize = structure->size; break; }
 			case indexType: {ManualModeSubIndexChoose(); }
+				}
 			}
-			break; }
-		case 5: {
+			system("Pause");
+			system("cls");
+			manualMode(); break;
+			break; 
+			structureSize = structure->size;
+		}
+		case 5:
+		{
 			getNumber();
 			if (structure->contains(givenInt))
 				std::cout << "FOUND IT! There is a: " << givenInt << "in structure" << std::endl;
 			else
 				std::cout << " There is no: " << givenInt << " in structure" << std::endl;
-
-			break; }
-		case 6: {
-			getNumber();
-			if (givenInt < structureSize && givenInt >= 0)
-				std::cout << "Vaule in the index " << givenInt << "is " << structure->getVaule(givenInt);
+			system("Pause");
+			system("cls");
+			manualMode(); break;
+			break;
+		}
+		case 6:
+		{	if (structureSize <= 0)
+			{
+			std::cout << "Structure is empty" << std::endl;
+			break;
+			}
+			if (structureType == redBlackTree)
+			{
+				std::cout << "Nodes are not indexed. Use this function for Heap, List or Array please" << std::endl;
+				break;
+			}
 			else
-				std::cout << "Wrong Index! Should be: 0 to " << structureSize - 1 << std::endl;
-			break; }
+			{
+				getNumber();
+				if (givenInt < structureSize && givenInt >= 0)
+					std::cout << "Vaule in the index " << givenInt << "is " << structure->getVaule(givenInt) << std::endl;
+				else
+					std::cout << "Wrong Index! Should be: 0 to " << structureSize - 1 << std::endl;
+
+				system("Pause");
+				system("cls");
+				manualMode(); break;
+				break;
+			}
+		}
 		case 7: {
 			std::cout << "You will change structure now. I will rewrite a structure" << std::endl;
 			type newType = structureType;
@@ -182,7 +363,12 @@ void Manager::manualMode()
 			std::cout << "4.Red-Black Tree" << std::endl;
 			std::cout << "0.Return" << std::endl;
 			int choice = 0;
-			std::cin >> choice;
+#undef max
+			while (!(std::cin >> choice)) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cout << "Invalid input.  Try again: ";
+			}
 			while (choice < 0 || choice >4)
 			{
 				std::cout << "Error give me 0-4" << std::endl;
@@ -192,27 +378,31 @@ void Manager::manualMode()
 			{
 			case 1: {
 				newType = list;
-				rewriteStructure(list);
 				break; }
 			case 2: {
-				newType = list;
-				rewriteStructure(heap);
+				newType = heap;
+		
 				break; }
 			case 3: {
-				newType = list;
-				rewriteStructure(array);
+				newType = array;
 				break; }
 			case 4: {
-				newType = list;
-				rewriteStructure(redBlackTree);
+				newType = redBlackTree;
 				break; }
 			case 0: {break; }
 			default: {std::cout << "Error give me 0-4" << std::endl; }
 
-
+		
 					 break;
 			}
-		}
+			
+			system("cls");
+			rewriteStructure(newType);
+			structureType = newType;
+			system("Pause");
+			system("cls");
+			manualMode(); break;
+			break; }
 		case 8: {
 			structure->clearAll();
 			std::cout << "Give me the file name" << std::endl;
@@ -238,13 +428,18 @@ void Manager::manualMode()
 			}
 			else
 				std::cout << " ERROR. Coudn't load the file" << std::endl;
+			system("Pause");
+			system("cls");
+			structureSize = structure->size;
+			manualMode(); break;
 
+			
+			 }
 
-
-			break; }
-
-
-		}
+		default: {
+			system("cls");
+			manualMode(); }
+		 }
 	}
 	system("Pause");
 	
@@ -259,10 +454,14 @@ void Manager::setStructurePointer()
 	case list: { listPointer = new List(); structure = listPointer;  break; }
 	case heap: { heapPointer = new Heap(); structure = heapPointer;  break; }
 	case array: { arrayPointer = new Array(); structure = arrayPointer;  break; }
+	case redBlackTree: { treePointer = new RBTree(); structure = treePointer;  break; }
 	}
 	std::cout << "Structure has been created. Size = 0" << std::endl;
 	std::cout << "Going back to StructureMenu " << std::endl;
-	setMeasureTabSize();
+	while (numberMeasurments < 1) {
+		setMeasureTabSize();
+		std::cin.clear();
+	}
 	system("Pause");
 	system("cls");
 	structureExist = true;
@@ -281,10 +480,35 @@ void Manager::fillWithRandom()
 		structure->addElement(elementsArray[i]);
 }
 
+void Manager::addOnEnd()
+{
+	structure->addElement(givenInt);
+}
+
+void Manager::fillOnRandomIndex()
+{
+		structure->addElementOnIndex(givenInt, elementsArray[givenInt-((int)structureSize/10)]);
+}
+
+void Manager::addOnBeginning()
+{
+	structure->addElementOnBeginning(givenInt);
+}
+
 void Manager::deleteRandom()
 {
-	structure->deleteIndex(givenInt);
+	structure->deleteIndex(givenInt - ((int)structureSize / 10));
 
+}
+
+void Manager::deleteFirst()
+{
+	structure->deleteFirst();
+}
+
+void Manager::deleteLast()
+{
+	structure->deleteLastElement();
 }
 
 void Manager::containsRandom()
@@ -321,8 +545,13 @@ void Manager::outPutStars()
 
 int Manager::getNumber()
 {
-	std::cout << "Give me int" << std::endl;
-	std::cin >> givenInt;
+	std::cout << "Give me number or int" << std::endl;
+#undef max
+	while (!(std::cin >> givenInt)) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cout << "Invalid input.  Try again: ";
+	}
 	return givenInt;
 }
 
@@ -341,7 +570,12 @@ void Manager::ManualModeAddIndexChoose()
 		}
 		else {
 			std::cout << "On what index? From 0 to " << structureSize << std::endl;
-			std::cin >> index;
+#undef max
+			while (!(std::cin >>index)) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cout << "Invalid input.  Try again: ";
+			}
 			if (index <= structureSize) {
 				structure->addElementOnIndex(givenInt, index);
 			}
@@ -364,7 +598,12 @@ void Manager::ManualModeSubIndexChoose()
 		}
 		else {
 			std::cout << "On what index? From 0 to " << structureSize << std::endl;
-			std::cin >> index;
+#undef max
+			while (!(std::cin >> index)) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cout << "Invalid input.  Try again: ";
+			}
 			if (index <= structureSize) {
 				structure->deleteIndex(givenInt);
 			}
@@ -403,7 +642,13 @@ void Manager::rewriteStructure(enum type newType)
 		structure = tmpPointer;
 		break; }
 	case redBlackTree: {
-		//TO DO
+		tmpPointer = new RBTree();
+		for (int i = 0; i < structureSize; i++)
+		{
+			tmpPointer->addElement(structure->getVaule(i));
+
+		}
+		structure = tmpPointer;
 		break; }
 	case array: {	tmpPointer = new Array();
 		for (int i = 0; i < structureSize; i++)
@@ -420,29 +665,140 @@ void Manager::rewriteStructure(enum type newType)
 
 void Manager::measureADD()
 {
-	for (int i = 0; i < numberMeasurments; i++) {
-		createArrayOfElements();
-		measurementTab[i]=timeCount(&Manager::fillWithRandom);
-		structure->clearAll();
-		delete[] elementsArray;
+	if (structureType == heap || structureType == redBlackTree) {
+		std::cout << "I'm filling structure with random numbers." << std::endl;
+		for (int i = 0; i < numberMeasurments; i++)
+		{
+			createArrayOfElements();
+			measurementTab[i] = timeCount(&Manager::fillWithRandom);
+			structure->clearAll();
+			delete[] elementsArray;
+		}
 	}
-	countMeasure();
-}
+	else
+	{
+		switch (operationType)
+		{
+		case indexType:
+			{
+			
+	
+			std::cout << "I'm filling structure with random numbers. I'm adding a new random element on the random index" << std::endl;
+
+				for (int i = 0; i < numberMeasurments; i++)
+				{
+				createArrayOfElements();
+				fillWithRandom();
+				givenInt = (rand() % structureSize + ((int)structureSize/10));
+				measurementTab[i] = timeCount(&Manager::fillOnRandomIndex);
+				structure->clearAll();
+				delete[] elementsArray;
+				}
+				break; 
+			}
+		case beginning:
+			{
+			std::cout << "I'm filling structure with random numbers. I'm adding a new random element on the beginning" << std::endl;
+			for (int i = 0; i < numberMeasurments; i++) {
+				createArrayOfElements();
+				fillWithRandom();
+				measurementTab[i] = timeCount(&Manager::addOnBeginning);
+				delete[] elementsArray;
+			}
+				break;
+			}
+		case end:
+		{
+			std::cout << "I'm filling structure with random numbers. I'm adding a new random element on the end" << std::endl;
+		
+			for (int i = 0; i < numberMeasurments; i++)
+			{
+				createArrayOfElements();
+				fillWithRandom();
+				measurementTab[i] = timeCount(&Manager::addOnEnd);
+				delete[] elementsArray;
+				
+			}
+			break;
+		}
+		}
+		
+		}
+		countMeasure();
+	}
+
 
 void Manager::measureDEL()
 {
-	for (int i = 0; i < numberMeasurments; i++) {
+	if (structureType == heap || structureType == redBlackTree) {
 		createArrayOfElements();
 		fillWithRandom();
-		delete[] elementsArray;
-		givenInt = rand() % (structureSize);
-		measurementTab[i] = timeCount(&Manager::deleteRandom);
-		structure->clearAll();
+		std::cout << "I'm filling structure with random numbers. I'm getting and deleting 1st element" << std::endl;
+		for (int i = 0; i < numberMeasurments; i++) {
+			createArrayOfElements();
+			fillWithRandom();
+			measurementTab[i] = timeCount(&Manager::deleteFirst);
+			structure->clearAll();
+			delete[] elementsArray;
+
+		}
+	}
+	else
+	{
+		switch (operationType)
+		{
+		case indexType:
+		{
+		
+			std::cout << "I'm filling structure with random numbers. I'm deleting random element" << std::endl;
+			for (int i = 0; i < numberMeasurments; i++)
+			{
+				createArrayOfElements();
+				fillWithRandom();
+				givenInt = (rand() % structureSize + ((int)structureSize / 10));
+				measurementTab[i] = timeCount(&Manager::deleteRandom);
+				structure->clearAll();
+				delete[] elementsArray;
+			}
+			break;
+		}
+		case beginning:
+		{
+			std::cout << "I'm filling structure with random numbers. I'm deleting first element" << std::endl;
+			
+			for (int i = 0; i < numberMeasurments; i++) {
+				createArrayOfElements();
+				fillWithRandom();
+				givenInt = rand() % structureSize;
+				measurementTab[i] = timeCount(&Manager::deleteFirst);
+				structure->clearAll();
+				delete[] elementsArray;
+			}
+			break;
+		}
+		case end:
+		{
+			std::cout << "I'm filling structure with random numbers. I'm deleting last element " << std::endl;
+		
+			for (int i = 0; i < numberMeasurments; i++)
+			{
+				createArrayOfElements();
+				fillWithRandom();
+				givenInt = rand() % structureSize;
+				measurementTab[i] = timeCount(&Manager::deleteLast);
+				structure->clearAll();
+				delete[] elementsArray;
+				
+			}
+			break;
+		}
+		}
+
+		
 
 	}
 	countMeasure();
 }
-
 void Manager::measureFindIndex()
 {
 	for (int i = 0; i < numberMeasurments; i++) {
@@ -459,31 +815,33 @@ void Manager::measureFindIndex()
 
 void Manager::measureContains()
 {
-	for (int i = 0; i < numberMeasurments; i++) {
-		createArrayOfElements();
-		fillWithRandom();
-		delete[] elementsArray;
-		givenInt = rand() % (structureSize);
-		measurementTab[i] = timeCount(&Manager::containsRandom);
-		structure->clearAll();
+		for (int i = 0; i < numberMeasurments; i++) {
+			createArrayOfElements();
+			fillWithRandom();
+			delete[] elementsArray;
+			givenInt = (rand() % structureSize + ((int)structureSize / 10));
+			measurementTab[i] = timeCount(&Manager::containsRandom);
+			structure->clearAll();
 
-	}
-	countMeasure();
+		}
+		countMeasure();
 
 }
 
+
 void Manager::setMeasureTabSize()
 {
-	
+	using namespace std;
+#undef max
 		std::cout << "How many measurments do you want to do?";
-		std::cin >> numberMeasurments;
-		while (numberMeasurments <= 0)
-		{
-			std::cout << "ERROR";
-			std::cout << "How many measurments do you want to do?";
-			std::cin >> numberMeasurments;
+		while (!(std::cin >> numberMeasurments)) {
+			std::cin.clear();
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Invalid input.  Try again: ";
 		}
 		measurementTab = new int[numberMeasurments];
+		
+		
 	
 }
 
@@ -491,12 +849,22 @@ void Manager::setStructureSize()
 {
 
 	std::cout << "What should be structure END size?";
-	std::cin >> structureSize;
+#undef max
+	while (!(std::cin >> structureSize)) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cout << "Invalid input.  Try again: ";
+	}
 	while (structureSize <= 0)
 	{
 		std::cout << "ERROR";
 		std::cout << "What should be structure END size?";
-		std::cin >> structureSize;
+#undef max
+		while (!(std::cin >> structureSize)) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Invalid input.  Try again: ";
+		}
 	}
 
 }
@@ -509,11 +877,13 @@ void Manager::countMeasure()
 		measurement += measurementTab[i];
 	}
 	measurement = measurement / numberMeasurments;
-	std::cout << "Average time is: " << measurement << "of add in the end algorithm" << std::endl;
+	std::cout << "Average time is: " << measurement << " [us] " << std::endl;
 	system("pause");
 	system("cls");
 	structureMenu();
 }
+
+
 
 void Manager::setaddSubType()
 {
@@ -523,7 +893,12 @@ void Manager::setaddSubType()
 
 	std::cout << "If structure is a heap remeber that it will be heapified if necessary" << std::endl;
 	int choice = 0;
-	std::cin >> choice;
+#undef max
+	while (!(std::cin >> choice)) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cout << "Invalid input.  Try again: ";
+	}
 	switch (choice) {
 	case 0: {operationType = indexType; break; }
 	case 1: {operationType = beginning; break; }

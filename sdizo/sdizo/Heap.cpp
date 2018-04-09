@@ -125,13 +125,23 @@ void Heap::addElementOnIndex(int x, int index)
 
 void Heap::deleteIndex(int index)
 {
-for (int i = index; i <= size-1; i++)
+	int tmp = 0;
+	for (int i = 0; i < size; i++) 
 	{
+		if (array[i] == index)
+		{
+			tmp = i;
+		}
+	}
+
+for (int i = tmp; i <= size-1; i++)
+		{
 
 	array[i] = array[i + 1];
-	}
+		}
 	size--;	
 	massHeapSort();
+	
 }
 
 int Heap::pop()
@@ -235,6 +245,8 @@ bool Heap::contains(int value)
 	}
 	
 	return false;
+
+	
 }
 
 bool Heap::IsAHeap() {
@@ -243,13 +255,13 @@ bool Heap::IsAHeap() {
 	{
 		parent = getParent(i);
 		if (array[i] > array[parent] ) {
-			std::cout << "It's not a heap!ERROR" << std::endl;
-			std::cout << array[i] <<"is bigger than his parent: " << array[parent] << std::endl;
+		//	std::cout << "It's not a heap!ERROR" << std::endl;
+			//std::cout << array[i] <<"is bigger than his parent: " << array[parent] << std::endl;
 			return false;
 		}
 		
 	}
-	std::cout << "It's  a heap! for sureee" << std::endl;
+	//std::cout << "It's  a heap! for sureee" << std::endl; //For debug
 	return true;
 
 }

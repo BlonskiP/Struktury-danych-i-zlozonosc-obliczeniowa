@@ -9,7 +9,7 @@ void List::addElement(int x)
 		firstElement = new Element;
 		firstElement->vaule = x;
 		lastElement = firstElement;
-		size++;
+	
 	}
 	else
 	{
@@ -17,9 +17,9 @@ void List::addElement(int x)
 		lastElement = lastElement->next;
 		lastElement->next = nullptr;
 		lastElement->vaule = x;
-		size++;
+		
 	}
-
+	size++;
 }
 void List::printAll()
 {
@@ -53,41 +53,47 @@ int List::getVaule(int index)
 }
 void List::addElementOnIndex(int x, int index)
 {
-	Element *tmp;
-	elementPointer = firstElement;
-	if (size == 0) addElement(x);
-	else 
-	{
-		for (int i = 1; i < index-1; i++)
+	if (index < size) {
+		Element *tmp;
+		elementPointer = firstElement;
+		if (size == 0) addElement(x);
+		else
 		{
-			if (elementPointer != nullptr)
+			for (int i = 1; i < index - 1; i++)
 			{
-				elementPointer = elementPointer->next;
-			}
-			
-		}
-		//Adding a new element between them
-		
-		tmp = elementPointer->next;
-		elementPointer->next = new Element;
-		elementPointer->next->vaule = x;
-		elementPointer->next->next = tmp;
-		size++;
-		
+				if (elementPointer != nullptr)
+				{
+					elementPointer = elementPointer->next;
+				}
 
+			}
+			//Adding a new element between them
+
+			tmp = elementPointer->next;
+			elementPointer->next = new Element;
+			elementPointer->next->vaule = x;
+			elementPointer->next->next = tmp;
+			size++;
+
+
+		}
 	}
-	
 }
 void List::addElementOnBeginning(int x){
-	if (size != 0) {
+	if (firstElement != nullptr) {
 		elementPointer = firstElement;
 		firstElement = new Element;
 		firstElement->next = elementPointer;
 		firstElement->vaule = x;
+		lastElement = firstElement;
 		size++;
 	}
 	else
-		addElement(x);
+	{
+		firstElement = new Element();
+		firstElement->vaule = x;
+		firstElement->next = nullptr;
+	}
 }
 void List::deleteLastElement()
 {
@@ -134,22 +140,24 @@ void List::deleteFirst()
 }
 void List::clearAll() {
 	Element *tmpNext;
-	elementPointer = firstElement;
-	while(true){
-		if(elementPointer->next !=nullptr){
-		tmpNext = elementPointer->next;
-		delete elementPointer;
-		elementPointer = tmpNext;
+	if (elementPointer != nullptr) {
+		elementPointer = firstElement;
+		while (true) {
+			if (elementPointer->next != nullptr) {
+				tmpNext = elementPointer->next;
+				delete elementPointer;
+				elementPointer = tmpNext;
 
+			}
+			else
+				break;
 		}
-		else
-			break;
-	}
-	elementPointer = nullptr;
-	firstElement = nullptr;
-	lastElement = nullptr;
-	size = 0;
+		elementPointer = nullptr;
+		firstElement = nullptr;
+		lastElement = nullptr;
+		size = 0;
 
+	}
 }
 
 bool List::contains(int x)
@@ -170,6 +178,8 @@ bool List::contains(int x)
 	//std::cout << "No element in the list :  " << x << std::endl;
 	return false;
 }
+
+
 
 List::List()
 {//Constructor with cleaning
