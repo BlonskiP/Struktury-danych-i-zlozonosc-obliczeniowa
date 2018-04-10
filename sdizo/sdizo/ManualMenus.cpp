@@ -499,8 +499,8 @@ void Manager::treesMenu() {
 			manualMode(); break; }
 		case 5: {manualModeCheckIfIntExist(); manualMode(); break; }
 		case 6: {manualModeStructureChange(); manualMode(); break; }
-		case 7: {break; }
-		case 8: {break; }
+		case 7: {manualModeStructureFromFile(); manualMode(); break; }
+		case 8: {manualModeFilStructure(); manualMode(); break; }
 		}
 	}
 }
@@ -605,4 +605,49 @@ void Manager::manualModeStructureChange() {
 		std::cout << "ERROR Give me 0 - 4" << std::endl;
 		manualModeStructureChange();
 	}
+}
+
+void Manager::manualModeStructureFromFile(){
+
+	std::cout << "Give me the file name" << std::endl;
+	std::string fileName;
+	std::cin >> fileName;
+	std::cout << fileName;
+	std::fstream file;
+	file.open(fileName);
+	if (file.is_open())
+	{
+		std::cout << "The file has been loaded" << std::endl;
+		std::string line;
+		getline(file, line);
+		//Geting 1st line as size
+		structure->clearAll();
+		int StructureFileSize;
+		StructureFileSize = std::stoi(line);
+		for (int i = 0; i < StructureFileSize; i++)
+			{
+			getline(file, line);
+			structure->addElement(std::stoi(line));
+			}
+	}
+	else
+	std::cout << " ERROR. Coudn't load the file" << std::endl;
+	system("Pause");
+
+
+}
+
+void Manager::manualModeFilStructure() {
+	std::cout << "Give structure size" << std::endl;
+	int newStructureSize = makeChoice();
+	if (newStructureSize > 0) {
+		structure->clearAll();
+		structureSize = newStructureSize;
+		createArrayOfElements();
+		fillWithRandom();
+	}
+	else
+		std::cout << "You can't have - size structure" << std::endl;
+	system("Pause");
+	
 }

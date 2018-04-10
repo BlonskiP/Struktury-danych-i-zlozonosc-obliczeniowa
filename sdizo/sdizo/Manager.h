@@ -52,6 +52,7 @@ public:
 	void manualModeCheckIfIntExist();
 	void manualModeStructureChange();
 	void manualModeStructureFromFile();
+	void manualModeFilStructure();
 	//Counter
 	int timeCount(void (Manager::*function)(void)); //counts time for target funtion
 	//Creation
