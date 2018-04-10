@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ManualMenus.cpp" />
     <ClCompile Include="TreeTester.cpp" />
     <ClInclude Include="Heap.h" />
     <ClCompile Include="Array.cpp" />

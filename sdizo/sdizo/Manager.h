@@ -12,6 +12,7 @@
 #include "Array.h"
 #include "Heap.h"
 #include "RBTree.h"
+
 class Manager
 {
 private:
@@ -45,6 +46,12 @@ public:
 	void mainMenu();
 	void structureMenu();
 	void manualMode();
+	void treesMenu();
+	void manualMenu();
+	int makeChoice();
+	void manualModeCheckIfIntExist();
+	void manualModeStructureChange();
+	void manualModeStructureFromFile();
 	//Counter
 	int timeCount(void (Manager::*function)(void)); //counts time for target funtion
 	//Creation
