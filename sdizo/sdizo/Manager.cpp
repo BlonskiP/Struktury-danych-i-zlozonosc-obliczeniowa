@@ -179,6 +179,7 @@ void Manager::structureMenu()
 				treePointer = new RBTree();
 				structure = treePointer;
 				break; }
+			
 			case 0: {break; }
 			default: {std::cout << "Error give me 0-4" << std::endl; }
 
@@ -190,7 +191,8 @@ void Manager::structureMenu()
 			system("cls");
 			structureMenu();
 			break; 
-		}//to do
+		}
+
 		case 0: {break; }
 		default: {
 			system("cls");
@@ -246,6 +248,7 @@ void Manager::manualMode()
 	std::cout << "6. Get vaule from index(Not for Red Black Tree)" << std::endl;
 	std::cout << "7. Change Structure" << std::endl;
 	std::cout << "8. Load Structure form txt file" << std::endl;
+	std::cout << "9. Fill With random" << std::endl;
 	int choice = 0;
 	bool exit = false;
 	while (exit == false)
@@ -435,6 +438,16 @@ void Manager::manualMode()
 
 			
 			 }
+		case 9: {
+			std::cout << "Give structure size" << std::endl;
+			std::cin >> structureSize;
+			createArrayOfElements();
+			fillWithRandom(); 
+			system("Pause");
+			system("cls");
+			manualMode();
+			break;
+		}
 
 		default: {
 			system("cls");
