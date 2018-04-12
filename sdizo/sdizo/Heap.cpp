@@ -249,6 +249,26 @@ bool Heap::contains(int value)
 	
 }
 
+void Heap::deleteInt(int x)
+{
+	int tmp = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (array[i] == x)
+		{
+			tmp = i;
+		}
+	}
+
+	for (int i = tmp; i <= size - 1; i++)
+	{
+
+		array[i] = array[i + 1];
+	}
+	size--;
+	massHeapSort();
+}
+
 bool Heap::IsAHeap() {
 	int parent;
 	for (int i = 0; i < size; i++)

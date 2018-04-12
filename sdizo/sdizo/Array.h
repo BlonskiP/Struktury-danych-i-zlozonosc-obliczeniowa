@@ -18,7 +18,7 @@ public:
 	void addElement(int x);
 	void addElementOnBeginning(int x);
 	void addElementOnIndex(int x, int index);
-
+	void deleteInt(int x);
 
 	
 	

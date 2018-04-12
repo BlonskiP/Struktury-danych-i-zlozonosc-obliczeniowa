@@ -159,7 +159,6 @@ void List::clearAll() {
 
 	}
 }
-
 bool List::contains(int x)
 {
 	elementPointer = firstElement;
@@ -178,7 +177,26 @@ bool List::contains(int x)
 	//std::cout << "No element in the list :  " << x << std::endl;
 	return false;
 }
+void List::deleteInt(int x) {
+	if (contains(x))
+	{
+		elementPointer = firstElement;
+		int tmp = 0;
+		for (int i = 0; i < size; i++)
+		{
+			if (elementPointer->vaule == x)
+			{
+				
+				break;
+			}
+			tmp++;
+		}
 
+		deleteIndex(tmp);
+	}
+
+
+}
 
 
 List::List()

@@ -33,6 +33,7 @@ public:
 	int getVaule(int index);
 	void massHeapSort();
 	bool contains(int value); //checks if 'value' is in heap
+	void deleteInt(int x);
 protected:
 	void heapSort(int index); // sorting
 	void extendHeap(); // more space for heap

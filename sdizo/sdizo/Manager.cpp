@@ -129,7 +129,18 @@ int Manager::getNumber()
 
 int Manager::getIndex()
 {
-	return 0;
+	std::cout << "Give me index" << std::endl;
+#undef max
+	while (!(std::cin >> index)) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cout << "Invalid input.  Try again: ";
+	}
+	if (index<0 || index>structureSize)
+	{
+		std::cout << "Index is bigger than structure or lower than 0";
+	}
+	return index;
 }
 
 void Manager::ManualModeAddIndexChoose()

@@ -448,13 +448,14 @@ void Manager::treesMenu() {
 	std::cout << "6. Change Structure" << std::endl;
 	std::cout << "7. Load Structure form txt file" << std::endl;
 	std::cout << "8. Fill With random" << std::endl;
+	std::cout << "9. Clear All" << std::endl;
 	std::cout << "0. Exit to Main Menu " << std::endl;
 	int choice = 0;
 	bool exit = false;
 	while (exit == false)
 	{
 		int choice = makeChoice();
-		if (choice > 0 && choice <= 8) {}
+		if (choice >= 0 && choice <= 9) {}
 		else {
 			system("cls");
 			manualMode();
@@ -500,7 +501,8 @@ void Manager::treesMenu() {
 		case 5: {manualModeCheckIfIntExist(); manualMode(); break; }
 		case 6: {manualModeStructureChange(); manualMode(); break; }
 		case 7: {manualModeStructureFromFile(); manualMode(); break; }
-		case 8: {manualModeFilStructure(); manualMode(); break; }
+		case 8: {manualModeFillStructure(); manualMode(); break; }
+		case 9: {structure->clearAll(); manualMode(); break; }
 		}
 	}
 }
@@ -524,7 +526,7 @@ void Manager::manualMenu() {
 	while (exit == false)
 	{
 		int choice = makeChoice();
-		if (choice > 0 && choice <= 12) {}
+		if (choice >= 0 && choice <= 12) {}
 		else {
 			system("cls");
 			manualMenu();
@@ -536,12 +538,28 @@ void Manager::manualMenu() {
 			system("cls");
 			manualMode();
 			break; }
-		case 2: {break; }
-		case 3: {break; }
-		case 4: {break; }
-		case 5: {break; }
+		case 2: {getNumber(); structure->addElement(givenInt);  manualMode(); break; }
+		case 3: {getNumber(); structure->addElementOnBeginning(givenInt); manualMode(); break; }
+		case 4: {getNumber(); getIndex(); structure->addElementOnIndex(givenInt, index); manualMode(); break; }
+		case 5: {getNumber(); structure->deleteInt(givenInt); manualMode(); break;
+			
+			break; }
 		case 6: {break; }
-		case 7: {break; }
+		case 7: {
+			if (structureSize <= 0)
+			{
+				std::cout << "Structure is empty" << std::endl;
+				break;
+			}
+			else
+			{
+				std::cout << "I will delete given int if it exist" << std::endl;
+				getNumber();
+				structure->deleteIndex(givenInt);
+			}
+			manualMode();
+			break;
+		}
 		case 8: {break; }
 		case 9: {break; }
 		case 10: {break; }
@@ -637,7 +655,7 @@ void Manager::manualModeStructureFromFile(){
 
 }
 
-void Manager::manualModeFilStructure() {
+void Manager::manualModeFillStructure() {
 	std::cout << "Give structure size" << std::endl;
 	int newStructureSize = makeChoice();
 	if (newStructureSize > 0) {

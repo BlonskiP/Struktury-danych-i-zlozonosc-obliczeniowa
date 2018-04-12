@@ -31,6 +31,7 @@ public:
 	//DEL METHODS
 	void deleteLastElement();
 	void deleteIndex(int index);
+	void deleteInt(int x);
 	void deleteFirst();
 	void printAll();
 	int getVaule(int index);

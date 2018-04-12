@@ -355,9 +355,14 @@ void RBTree::deleteLastElement()
 
 void RBTree::deleteIndex(int index)
 {
-	Node *temp = findNodeWithValue(index);
-	if(temp!=nullptr)
-	deleteNode(temp);
+	
+}
+
+void RBTree::deleteInt(int x)
+{
+	Node *temp = findNodeWithValue(x);
+	if (temp != nullptr)
+		deleteNode(temp);
 }
 
 void RBTree::deleteFirst()

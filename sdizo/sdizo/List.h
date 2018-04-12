@@ -24,6 +24,7 @@ public:
 	void deleteFirst();
 	//Searching
 	void printAll();
+	void deleteInt(int x);
 	int getVaule(int index);
 	void clearAll();
 	bool contains(int x);
