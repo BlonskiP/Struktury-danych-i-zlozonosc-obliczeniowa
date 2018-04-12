@@ -85,24 +85,12 @@ void Array::deleteInt(int x)
 		{
 			size--;
 			maxSize--;
-			memmove(arrayPointer + index, arrayPointer + index + 1, (size - index) * sizeof(int));
+			memmove(arrayPointer + i, arrayPointer + i + 1, (size - index) * sizeof(int));
 			arrayPointer = (int*)realloc(arrayPointer, size * sizeof(int));
 			i--;
 		}
 
 	}
-
-	if (index < size && index >= 0)
-	{
-		size--;
-		maxSize--;
-
-
-		memmove(arrayPointer + index, arrayPointer + index + 1, (size - index) * sizeof(int));
-		arrayPointer = (int*)realloc(arrayPointer, size * sizeof(int));
-
-	}
-	else if (size == 1 || index > size) { deleteLastElement(); }
 	
 }
 bool Array::contains(int x) 
