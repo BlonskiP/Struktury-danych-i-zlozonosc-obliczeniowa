@@ -78,16 +78,15 @@ void Array::addElementOnIndex(int x, int index)
 }
 void Array::deleteInt(int x)
 {
-	int index = 0;
 	for (int i = 0; i < size; i++)
 	{
 		if (*(arrayPointer + i) == x)
 		{
 			size--;
 			maxSize--;
-			memmove(arrayPointer + i, arrayPointer + i + 1, (size - index) * sizeof(int));
+			memmove(arrayPointer + i, arrayPointer + i + 1, (size - i) * sizeof(int));
 			arrayPointer = (int*)realloc(arrayPointer, size * sizeof(int));
-			i--;
+			break;
 		}
 
 	}

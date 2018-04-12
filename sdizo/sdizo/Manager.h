@@ -77,12 +77,19 @@ public:
 	void rewriteStructure(enum type);
 	//Measure
 	void measureADD();
+	void measureADDEND();
+	void measureADDINDEX();
 	void measureDEL();
+	void measureDELEND();
 	void measureFindIndex();
 	void measureContains();
 	void setMeasureTabSize();
 	void setStructureSize();
 	void countMeasure();
 	void setaddSubType();
+	void treeMeasureMenu();
+	void measureDELINDEX();
+	void normMeasureMenu();
+	void changeMeasureStructure();
 };
 

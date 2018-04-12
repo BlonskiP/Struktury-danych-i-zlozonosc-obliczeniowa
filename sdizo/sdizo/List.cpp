@@ -68,13 +68,13 @@ void List::addElementOnIndex(int x, int index)
 
 			}
 			//Adding a new element between them
-
-			tmp = elementPointer->next;
-			elementPointer->next = new Element;
-			elementPointer->next->vaule = x;
-			elementPointer->next->next = tmp;
-			size++;
-
+			if (elementPointer->next != nullptr) {
+				tmp = elementPointer->next;
+				elementPointer->next = new Element;
+				elementPointer->next->vaule = x;
+				elementPointer->next->next = tmp;
+				size++;
+			}
 
 		}
 	}
@@ -142,6 +142,11 @@ void List::clearAll() {
 	Element *tmpNext;
 	if (elementPointer != nullptr) {
 		elementPointer = firstElement;
+		if (size == 1)
+		{
+			delete firstElement;
+		}
+		else
 		while (true) {
 			if (elementPointer->next != nullptr) {
 				tmpNext = elementPointer->next;
@@ -162,14 +167,16 @@ void List::clearAll() {
 bool List::contains(int x)
 {
 	elementPointer = firstElement;
-	for (int i = 1; i < size; i++)
+	for (int i = 0; i < size; i++)
 	{
 		if (elementPointer != nullptr)
 		{
-			if (elementPointer->vaule == x) {
+			if (elementPointer->vaule == x)
+			{
 			//	std::cout << "FOUND: " << x << std::endl;
 				return true;
 			}
+			if (elementPointer->next != nullptr);
 			elementPointer = elementPointer->next;
 		}
 
@@ -178,26 +185,47 @@ bool List::contains(int x)
 	return false;
 }
 void List::deleteInt(int x) {
-	if (contains(x))
-	{
+	if (size > 0) {
 		elementPointer = firstElement;
-		int tmp = 0;
-		for (int i = 0; i < size; i++)
+
+		if (size == 1 && firstElement->vaule == x)
 		{
-			if (elementPointer->vaule == x)
-			{
-				
-				break;
-			}
-			tmp++;
+			clearAll();
 		}
+		else
+			if (elementPointer->vaule == x && size > 2)
+			{
+				Element *toDelete = elementPointer;
+				elementPointer = elementPointer->next;
+				firstElement = elementPointer;
+				delete toDelete;
+				size--;
+			}
+			else
 
-		deleteIndex(tmp);
+				for (int i = 0; i < size; i++)
+				{
+					if (elementPointer->next != nullptr) {
+						if (elementPointer->next->vaule == x)
+						{
+							Element *toDelete = elementPointer->next;
+							elementPointer->next = elementPointer->next->next;
+							delete toDelete;
+							size--;
+							break;
+						}
+
+						else
+						{
+							elementPointer = elementPointer->next;
+						}
+					}
+
+
+
+				}
 	}
-
-
 }
-
 
 List::List()
 {//Constructor with cleaning

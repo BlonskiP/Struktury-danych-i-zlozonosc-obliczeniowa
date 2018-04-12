@@ -41,6 +41,7 @@ void Manager::mainMenu()
 
 void Manager::structureMenu()
 {
+	system("cls");
 	delete measurementTab;
 	measurementTab = new int[numberMeasurments]; //clear table
 #undef max
@@ -49,142 +50,8 @@ void Manager::structureMenu()
 
 	if (structureExist == true) {
 		structure->clearAll();
-		std::cout << "Your structure is Ready for experiment" << std::endl;
-		std::cout << "Will make  measurments and arithmetic average " << std::endl;
-		std::cout << "1.Measure ADD algorithms" << std::endl;
-		std::cout << "2.Measure DELETE algorithms" << std::endl;
-		std::cout << "3.Measure Search algorithms" << std::endl;
-		std::cout << "4 .(List and Array) .Measure GetIndex Value algorithms" << std::endl;
-		std::cout << "5. Set number of measurments Actual is" << numberMeasurments << std::endl;
-		std::cout << "6. Set structure size. Actual is " << structureSize << std::endl;
-		std::cout << "7.(List and Array) Set add/sub type Actual is " << operationType << std::endl;
-		std::cout << "8. Go To Manual structure mode " << std::endl;
-		std::cout << "9. Change Structure: " << std::endl;
-		std::cout << "0.EXIT " << std::endl;
-		std::cout << "Your structure is: " << std::endl;
-		switch (structureType)
-		{
-		case list: {std::cout << "List" << std::endl; break; }
-		case array: {std::cout << "Array" << std::endl; break; }
-		case heap: {std::cout << "Heap" << std::endl; break; }
-		case redBlackTree: {std::cout << "Red Black Tree" << std::endl; break; }
-		}
-		while (!(std::cin >> choice)) {
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Invalid input.  Try again: ";
-		}
-		switch (choice)
-		{
-		case 1: {measureADD(); break; }
-		case 2: {measureDEL(); break; }
-		case 3: {
-			for (int i = 0; i < numberMeasurments; i++)
-			{
-				createArrayOfElements();
-				fillWithRandom();
-				delete[] elementsArray;
-				givenInt = (rand() % structureSize + ((int)structureSize / 10));
-				measurementTab[i] = timeCount(&Manager::containsRandom);
-				structure->clearAll();
-
-			}
-			countMeasure();
-			break; }
-		case 4: {
-			if (structureType == list || structureType == array) {
-				measureFindIndex();
-			}
-			else {
-				std::cout << "Your structure type must be array or list" << std::endl;
-				system("pause");
-				system("cls");
-			}
-			structureMenu();
-			break; }
-		case 5: {setMeasureTabSize(); structureMenu(); break; }
-		case 6: {setStructureSize(); structureMenu(); break; }
-		case 7: {
-			if (structureType == list || structureType == array) {
-				setaddSubType();
-			}
-			else
-			{
-				std::cout << "Your structure type must be array or list" << std::endl;
-				system("pause");
-				system("cls");
-			}
-			structureMenu();
-			break; }
-		case 8: {structureExist = false;  manualMode(); structureMenu(); break; }
-		case 9: {
-			type newType = structureType;
-			std::cout << "What type should be a new structure?" << std::endl;
-			std::cout << "1.List" << std::endl;
-			std::cout << "2.Heap" << std::endl;
-			std::cout << "3.Array" << std::endl;
-			std::cout << "4.Red-Black Tree" << std::endl;
-			std::cout << "0.Return" << std::endl;
-			int choice = 0;
-#undef max
-			while (!(std::cin >> choice)) {
-				std::cin.clear();
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				std::cout << "Invalid input.  Try again: ";
-			}
-			while (choice < 0 || choice >4)
-			{
-				std::cout << "Error give me 0-4" << std::endl;
-				std::cin >> choice;
-			}
-			switch (choice)
-			{
-			case 1: {
-				newType = list;
-				structureType = newType;
-				listPointer = new List();
-				structure = listPointer;
-				break; }
-			case 2: {
-				newType = heap;
-				structureType = newType;
-				heapPointer = new Heap();
-				structure = heapPointer;
-				break; }
-			case 3: {
-				newType = array;
-				structureType = newType;
-				arrayPointer = new Array();
-				structure = arrayPointer;
-				break; }
-			case 4: {
-				newType = redBlackTree;
-				structureType = newType;
-				treePointer = new RBTree();
-				structure = treePointer;
-				break; }
-
-			case 0: {break; }
-			default: {std::cout << "Error give me 0-4" << std::endl; }
-
-
-					 break;
-			}
-
-
-			system("cls");
-			structureMenu();
-			break;
-		}
-
-		case 0: {break; }
-		default: {
-			system("cls");
-			std::cout << "Give 0-9 to preced" << std::endl;
-			structureMenu();
-		}
-		}
-
+		if (structureType == redBlackTree || structureType == heap) treeMeasureMenu();
+		else normMeasureMenu();
 	}
 	else {
 		std::cout << "We will create Structure now." << std::endl;
@@ -226,216 +93,10 @@ void Manager::manualMode()
 		treesMenu();
 	else
 		manualMenu();
-//
-//		
-//		int choice = 0;
-//		bool exit = false;
-//		while (exit == false)
-//		{
-//#undef max
-//			while (!(std::cin >> choice)) {
-//				std::cin.clear();
-//				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-//				std::cout << "Invalid input.  Try again: ";
-//			}
-//			switch (choice) {
-//			case 0: {
-//				exit = true; break; }
-//			case 1: {structure->printAll();
-//				system("Pause");
-//				system("cls");
-//				manualMode(); break;
-//				break; }
-//			case 2: {setaddSubType(); system("Pause");
-//				system("cls");
-//				manualMode(); break;  break; }
-//			case 3:
-//			{
-//				getNumber();
-//				if (structureType == heap || structureType == redBlackTree)
-//				{
-//					structure->addElement(givenInt); structureSize = structure->size;
-//				}
-//				else {
-//					switch (operationType)
-//					{
-//
-//
-//					case end: {structure->addElement(givenInt); structureSize = structure->size;  break; }
-//					case beginning: {structure->addElementOnBeginning(givenInt); structureSize = structure->size; break; }
-//					case indexType: {ManualModeAddIndexChoose(); break; }
-//					}
-//				}
-//				system("Pause");
-//				system("cls");
-//				manualMode(); break;
-//			}
-//			case 4:
-//			{
-//				if (structureSize <= 0)
-//				{
-//					std::cout << "Structure is empty" << std::endl;
-//					break;
-//				}
-//				if (structureType == heap || structureType == redBlackTree)
-//				{
-//					std::cout << "I will delete given int if it exist" << std::endl;
-//					getNumber();
-//					structure->deleteIndex(givenInt);
-//				}
-//				else
-//				{
-//					switch (operationType)
-//					{
-//
-//
-//					case end: {structure->deleteLastElement(); structureSize = structure->size;  break; }
-//					case beginning: {structure->deleteFirst(); structureSize = structure->size; break; }
-//					case indexType: {ManualModeSubIndexChoose(); }
-//					}
-//				}
-//				system("Pause");
-//				system("cls");
-//				manualMode(); break;
-//				break;
-//				structureSize = structure->size;
-//			}
-//			case 5:
-//			{
-//				getNumber();
-//				if (structure->contains(givenInt))
-//					std::cout << "FOUND IT! There is a: " << givenInt << "in structure" << std::endl;
-//				else
-//					std::cout << " There is no: " << givenInt << " in structure" << std::endl;
-//				system("Pause");
-//				system("cls");
-//				manualMode(); break;
-//				break;
-//			}
-//			case 6:
-//			{	if (structureSize <= 0)
-//			{
-//				std::cout << "Structure is empty" << std::endl;
-//				break;
-//			}
-//			if (structureType == redBlackTree)
-//			{
-//				std::cout << "Nodes are not indexed. Use this function for Heap, List or Array please" << std::endl;
-//				break;
-//			}
-//			else
-//			{
-//				getNumber();
-//				if (givenInt < structureSize && givenInt >= 0)
-//					std::cout << "Vaule in the index " << givenInt << "is " << structure->getVaule(givenInt) << std::endl;
-//				else
-//					std::cout << "Wrong Index! Should be: 0 to " << structureSize - 1 << std::endl;
-//
-//				system("Pause");
-//				system("cls");
-//				manualMode(); break;
-//				break;
-//			}
-//			}
-//			case 7: {
-//				std::cout << "You will change structure now. I will rewrite a structure" << std::endl;
-//				type newType = structureType;
-//				std::cout << "What type should be a new structure?" << std::endl;
-//				std::cout << "1.List" << std::endl;
-//				std::cout << "2.Heap" << std::endl;
-//				std::cout << "3.Array" << std::endl;
-//				std::cout << "4.Red-Black Tree" << std::endl;
-//				std::cout << "0.Return" << std::endl;
-//				int choice = 0;
-//#undef max
-//				while (!(std::cin >> choice)) {
-//					std::cin.clear();
-//					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-//					std::cout << "Invalid input.  Try again: ";
-//				}
-//				while (choice < 0 || choice >4)
-//				{
-//					std::cout << "Error give me 0-4" << std::endl;
-//					std::cin >> choice;
-//				}
-//				switch (choice)
-//				{
-//				case 1: {
-//					newType = list;
-//					break; }
-//				case 2: {
-//					newType = heap;
-//
-//					break; }
-//				case 3: {
-//					newType = array;
-//					break; }
-//				case 4: {
-//					newType = redBlackTree;
-//					break; }
-//				case 0: {break; }
-//				default: {std::cout << "Error give me 0-4" << std::endl; }
-//
-//
-//						 break;
-//				}
-//
-//				system("cls");
-//				rewriteStructure(newType);
-//				structureType = newType;
-//				system("Pause");
-//				system("cls");
-//				manualMode(); break;
-//				break; }
-//			case 8: {
-//				structure->clearAll();
-//				std::cout << "Give me the file name" << std::endl;
-//				std::string fileName;
-//				std::cin >> fileName;
-//				std::cout << fileName;
-//				std::fstream file;
-//				file.open(fileName);
-//				if (file.is_open())
-//				{
-//
-//					std::cout << "The file has been loaded" << std::endl;
-//					std::string line;
-//					getline(file, line);
-//					//Geting 1st line as size
-//					int StructureFileSize;
-//					StructureFileSize = std::stoi(line);
-//					for (int i = 0; i < StructureFileSize; i++)
-//					{
-//						getline(file, line);
-//						structure->addElement(std::stoi(line));
-//					}
-//				}
-//				else
-//					std::cout << " ERROR. Coudn't load the file" << std::endl;
-//				system("Pause");
-//				system("cls");
-//				structureSize = structure->size;
-//				manualMode(); break;
-//
-//
-//			}
-//			case 9: {
-//				std::cout << "Give structure size" << std::endl;
-//				std::cin >> structureSize;
-//				createArrayOfElements();
-//				fillWithRandom();
-//				system("Pause");
-//				system("cls");
-//				manualMode();
-//				break;
-//			}
-//
-//			default: {
-//				system("cls");
-//				manualMode(); }
-//			}
-//		}
-//		system("Pause");
+	{
+		structureSize = 10;
+		structureMenu();
+	}
 }
 
 
@@ -477,7 +138,7 @@ void Manager::treesMenu() {
 			{
 				std::cout << "I will delete given int if it exist" << std::endl;
 				getNumber();
-				structure->deleteIndex(givenInt);
+				structure->deleteInt(givenInt);
 			}
 			manualMode();
 			break; }
@@ -492,7 +153,7 @@ void Manager::treesMenu() {
 				getNumber();
 				while (structure->contains(givenInt)) 
 				{
-					structure->deleteIndex(givenInt);
+					structure->deleteInt(givenInt);
 				}
 			
 			}
@@ -520,13 +181,14 @@ void Manager::manualMenu() {
 	std::cout << "10. Change Structure" << std::endl;
 	std::cout << "11. Load Structure form txt file" << std::endl;
 	std::cout << "12. Fill With random" << std::endl;
+	std::cout << "13. Clear ALL" << std::endl;
 	std::cout << "0. Exit to Main Menu " << std::endl;
 	int choice = 0;
 	bool exit = false;
 	while (exit == false)
 	{
 		int choice = makeChoice();
-		if (choice >= 0 && choice <= 12) {}
+		if (choice >= 0 && choice <= 13) {}
 		else {
 			system("cls");
 			manualMenu();
@@ -541,10 +203,22 @@ void Manager::manualMenu() {
 		case 2: {getNumber(); structure->addElement(givenInt);  manualMode(); break; }
 		case 3: {getNumber(); structure->addElementOnBeginning(givenInt); manualMode(); break; }
 		case 4: {getNumber(); getIndex(); structure->addElementOnIndex(givenInt, index); manualMode(); break; }
-		case 5: {getNumber(); structure->deleteInt(givenInt); manualMode(); break;
-			
-			break; }
-		case 6: {break; }
+		case 5: {getNumber(); structure->deleteInt(givenInt); manualMode(); break; }
+		case 6: {if (structureSize <= 0)
+		{
+			std::cout << "Structure is empty" << std::endl;
+			break;
+		}
+				else 
+				{
+					std::cout << "I will delete given int if it exist" << std::endl;
+					getNumber();
+					while (structure->contains(givenInt))
+					{
+						structure->deleteInt(givenInt);
+					}
+
+				} manualMode(); break; }
 		case 7: {
 			if (structureSize <= 0)
 			{
@@ -560,11 +234,18 @@ void Manager::manualMenu() {
 			manualMode();
 			break;
 		}
-		case 8: {break; }
-		case 9: {break; }
-		case 10: {break; }
-		case 11: {break; }
-		case 12: {break; }
+		case 8: {manualModeCheckIfIntExist(); manualMode(); break; }
+		case 9: {getNumber(); 
+			if (givenInt < 0) { std::cout<<"Give indx bigger than 0";  break; }
+			else
+			if (structureSize > 0 && givenInt < structureSize) {
+			std::cout << "Index: " << givenInt << " Value: " << structure->getVaule(givenInt) << std::endl;
+		
+		} break; }
+		case 10: {manualModeStructureChange(); manualMode(); break; }
+		case 11: {manualModeStructureFromFile(); manualMode(); break; }
+		case 12: {manualModeFillStructure(); manualMode(); break; }
+		case 13: { {structure->clearAll(); manualMode(); break; }}
 
 		}
 	}
